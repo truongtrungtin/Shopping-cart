@@ -5,7 +5,7 @@ class CartController extends BaseController {
     
     public function Index () {
         $cart = ShoppingCartSession::GetShoppingCart();
-        $model = $cart->articles;
+        $model = $cart->product;
         parent::RenderPage(
             'Cart', 
             'view/layout/layout.php', 
@@ -22,11 +22,11 @@ class CartController extends BaseController {
     public function RemoveArticle () {
         $id = $_REQUEST['id'];
         $cart = ShoppingCartSession::GetShoppingCart();
-        $filteredArticles = array_filter($cart->articles, function ($element) use ($id) {
+        $filteredProduct = array_filter($cart->product, function ($element) use ($id) {
             return $element->getCartUniqueId() != $id;
         });
-        if (count($filteredArticles) > 0) {
-            $cart->articles = $filteredArticles;
+        if (count($filteredProduct) > 0) {
+            $cart->product = $filteredProduct;
             ShoppingCartSession::StoreShoppingCartInSession($cart);
             parent::RedirectToController('cart');
         } else {
@@ -37,7 +37,7 @@ class CartController extends BaseController {
     
     public function Checkout () {
         $cart = ShoppingCartSession::GetShoppingCart();
-        $model = $cart->articles;
+        $model = $cart->product;
         parent::RenderPage(
             'Cart', 
             'view/layout/layout.php', 
@@ -49,12 +49,12 @@ class CartController extends BaseController {
     public function ConfirmCheckout () {
         if (ShoppingCartSession::ShoppingCartExists()) {
             $cart = ShoppingCartSession::GetShoppingCart();
-            $cart->articles;
-            foreach ($cart->articles as $article) {
+            $cart->product;
+            foreach ($cart->product as $product) {
                 $user = Security::GetLoggedUser();
                 $sale = new Sale(
                     $user->getId(),
-                    $article->getId(),
+                    $product->getId(),
                     $invoiceNumber = (Setting::GetLastInvoiceNumber() + 1),
                     $saleDate = (new DateTime())->format('Y-m-d H:i:s')
                 );
@@ -62,7 +62,7 @@ class CartController extends BaseController {
             }
             parent::RedirectToController('cart', 'Empty'); // Succesful, redirect to sale history
         } else {
-            parent::RedirectToController('articles');
+            parent::RedirectToController('product');
         }
     }
 

@@ -4,7 +4,7 @@ class HomeController extends BaseController {
     public function __CONSTRUCT (){}
     
     public function Index () {
-        $model = Article::GetAllArticles();
+        $model = Article::GetAllProduct();
         parent::RenderPage(
             'Home', 
             'view/layout/layout.php', 

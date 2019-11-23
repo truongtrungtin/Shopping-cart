@@ -20,7 +20,7 @@ class ManageController extends BaseController {
                 $_REQUEST['supp_address'],
             );
             $model->Create();
-            parent::RedirectToController('articles');
+            parent::RedirectToController('product');
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             parent::RenderPage(
                 'Manage', 
@@ -41,12 +41,12 @@ class ManageController extends BaseController {
                 
             );
             $model->Create();
-            parent::RedirectToController('articles');
+            parent::RedirectToController('product');
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             parent::RenderPage(
-                'Articles',
+                'Product',
                 'view/layout/layout.php', 
-                'view/articles/create.php',
+                'view/product/create.php',
                 $model
             );
         }

@@ -71,7 +71,7 @@ class Article {
   public static function GetArticleById ($id) {
     $model = null;
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('SELECT `CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE`, `CATEGORYID` , `DESCRIPTION` , `ID` FROM `articles` WHERE `ID` = ?');
+    $statement = $db->prepare('SELECT `CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE`, `CATEGORYID` , `DESCRIPTION` , `ID` FROM `product` WHERE `ID` = ?');
     $statement->bind_param('i', $id);
     $statement->bind_result($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $DESCRIPTION , $ID);
     if ($statement->execute()) {
@@ -82,10 +82,10 @@ class Article {
     return $model;
   }
 
-  public static function GetAllArticles () {
+  public static function GetAllProduct () {
     $models = [];
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('SELECT `CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE` , `CATEGORYID` , `DESCRIPTION` , `ID` FROM `articles` ');
+    $statement = $db->prepare('SELECT `CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE` , `CATEGORYID` , `DESCRIPTION` , `ID` FROM `product` ');
     $statement->bind_result($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $DESCRIPTION , $ID);
     if ($statement->execute()) {
       while ($row = $statement->fetch()) {
@@ -98,7 +98,7 @@ class Article {
 
   public function Create () {
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('INSERT INTO `articles`(`CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE` , `CATEGORYID` , `DESCRIPTION`)  VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+    $statement = $db->prepare('INSERT INTO `product`(`CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE` , `CATEGORYID` , `DESCRIPTION`)  VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
     $statement->bind_param(
       'sssdisss',
       $this->code,
@@ -116,7 +116,7 @@ class Article {
   public function Edit () {
     $db = (new DataBase())->CreateConnection();
     $statement = $db->prepare(
-      'UPDATE `articles` SET 
+      'UPDATE `product` SET 
         `CODE` = ?,
         `SUPPLIERID` = ?,
         `NAME` = ?,
@@ -144,10 +144,10 @@ class Article {
 
   public function Delete () {
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('DELETE FROM `articles` WHERE `ID` = ?');
+    $statement = $db->prepare('DELETE FROM `product` WHERE `ID` = ?');
     $statement->bind_param('i', $this->id);
     $statement->execute();
-    $statement = $db->prepare('ALTER TABLE `articles` AUTO_INCREMENT=1');
+    $statement = $db->prepare('ALTER TABLE `product` AUTO_INCREMENT=1');
     $statement->execute();
   }
 

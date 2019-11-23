@@ -13,14 +13,14 @@
             </a>
           </li>
           <li>
-            <a href="?c=articles" class="<?= (($PAGE == 'Articles') ? 'active' : '') ?>">
+            <a href="?c=product" class="<?= (($PAGE == 'Product') ? 'active' : '') ?>">
               <i class="fa fa-product-hunt" aria-hidden="true"></i>&nbsp;Shop
             </a>
           </li>
           <?php if ((Security::GetLoggedUser())->getRole() == 'ADMIN') { ?>
             <li>
-              <a href="?c=sales" class="<?= (($PAGE == 'Sales') ? 'active' : '') ?>">
-                <i class="fa fa-history" aria-hidden="true"></i>&nbsp;Sales
+              <a href="?c=order" class="<?= (($PAGE == 'Order') ? 'active' : '') ?>">
+                <i class="fa fa-history" aria-hidden="true"></i>&nbsp;Order
               </a>
             </li>
             <li>
@@ -31,7 +31,7 @@
           <?php } ?>
           <?php if ((Security::GetLoggedUser())->getRole() == 'CLIENT') { ?>
             <li>
-              <a href="?c=sales" class="<?= (($PAGE == 'Sales') ? 'active' : '') ?>">
+              <a href="?c=order" class="<?= (($PAGE == 'Order') ? 'active' : '') ?>">
                 <i class="fa fa-history" aria-hidden="true"></i>&nbsp;History
               </a>
             </li>
@@ -47,7 +47,7 @@
       <a href="?c=cart">
         <div class="header-wrapicon2">
           <img src="./public/images/icons/icon-header-02.png" class="header-icon1" aria-hidden="true" alt="ICON">
-          <a class="header-icons-noti"><?= count($cart->articles) ?></a>
+          <a class="header-icons-noti"><?= count($cart->product) ?></a>
         </div>
       </a>
     <?php } ?>

@@ -16,9 +16,9 @@
             </div>
             <table class="table-shopping-cart">
               <ul>
-                <?php foreach ($MODEL as $article) { ?>
+                <?php foreach ($MODEL as $product) { ?>
                   <li>
-                    <b><?= $article->getSupplierid() ?> - <?= $article->getName() ?>: </b><?= number_format($article->getPrice()) . " VNĐ" ?>
+                    <b><?= $product->getSupplierid() ?> - <?= $product->getName() ?>: </b><?= number_format($product->getPrice()) . " VNĐ" ?>
                   </li>
                 <?php } ?>
               </ul>

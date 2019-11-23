@@ -35,7 +35,7 @@
             <div class="w-size16 flex-m flex-w">
               <div class="btn-addcart-product-detail size9 trans-0-4 m-t-10 m-b-10">
                 <!-- Button -->
-                <a type="submit" href="?c=articles&a=Buy&id=<?= $MODEL->getId() ?>" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+                <a type="submit" href="?c=product&a=Buy&id=<?= $MODEL->getId() ?>" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
                   Add to Cart
                 </a>
               </div>

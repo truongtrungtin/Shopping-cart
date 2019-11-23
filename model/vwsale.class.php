@@ -88,7 +88,7 @@ class vwSale {
 
 
 
-  public static function GetAllSales () {
+  public static function GetAllOrder () {
     $models = [];
     $db = (new DataBase())->CreateConnection();
     $statement = $db->prepare('SELECT `USERID` , `USERNAME`,  `CODE`, `SUPPLIER`, `CATEGORY` , `NAME`, `INVOICENUMBER`, `SALEDATE`, `ID` FROM `carts` ORDER BY `INVOICENUMBER` ASC ');
@@ -102,7 +102,7 @@ class vwSale {
     return $models;
   }
 
-  public static function GetAllSalesForUser ($Userid) {
+  public static function GetAllOrderForUser ($Userid) {
     $models = [];
     $db = (new DataBase())->CreateConnection();
     $statement = $db->prepare('SELECT  `USERID` , `USERNAME`,  `CODE`, `SUPPLIER`, `CATEGORY` , `NAME`, `INVOICENUMBER`, `SALEDATE`, `ID` FROM `carts` WHERE `USERID` = ?');
@@ -131,7 +131,7 @@ class vwSale {
     return $model;
   }
 
-  public static function FindSalesByInvoiceNumber ($invoiceNumber) {
+  public static function FindOrderByInvoiceNumber ($invoiceNumber) {
     $models = [];
     $db = (new DataBase())->CreateConnection();
     $statement = $db->prepare('SELECT  `USERID` , `USERNAME`,  `CODE`, `SUPPLIER`, `CATEGORY` , `NAME`, `INVOICENUMBER`, `SALEDATE`, `ID` FROM `carts` WHERE `INVOICENUMBER` LIKE ?');

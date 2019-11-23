@@ -1,7 +1,7 @@
 <section class="container">
-  <h2>Edit article</h1>
+  <h2>Edit product</h1>
     <br>
-    <form class="" action="?c=articles&a=Edit" method="POST" autocomplete="off">
+    <form class="" action="?c=product&a=Edit" method="POST" autocomplete="off">
       <div class="form-row mb-4">
         <div class="col-6">
           <label for="code">Code</label>
@@ -48,7 +48,7 @@
       </div>
       <div class="col-md-12">
         <input type="hidden" name="id" id="id" value="<?= $MODEL->getId() ?>" />
-        <button type="submit" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit article</button>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit product</button>
       </div>
     </form>
 </section>

@@ -1,14 +1,14 @@
 <?php
-class ArticlesController extends BaseController {
+class ProductController extends BaseController {
     
     public function __CONSTRUCT (){}
     
     public function Index () {
-        $model = Article::GetAllArticles();
+        $model = Article::GetAllProduct();
         parent::RenderPage(
-            'Articles', 
+            'Product', 
             'view/layout/layout.php', 
-            'view/articles/articles.php',
+            'view/product/product.php',
             $model
         );
     }
@@ -27,14 +27,14 @@ class ArticlesController extends BaseController {
                 $_REQUEST['id'],
             );
             $model->Edit();
-            parent::RedirectToController('articles');
+            parent::RedirectToController('product');
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $id = (int)$_REQUEST['id'];
             $model = Article::GetArticleById($id);
             parent::RenderPage(
-                'Articles',
+                'Product',
                 'view/layout/layout.php', 
-                'view/articles/edit.php',
+                'view/product/edit.php',
                 $model
             );
         }
@@ -53,12 +53,12 @@ class ArticlesController extends BaseController {
                 $_REQUEST['description'],
             );
             $model->Create();
-            parent::RedirectToController('articles');
+            parent::RedirectToController('product');
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             parent::RenderPage(
-                'Articles',
+                'Product',
                 'view/layout/layout.php', 
-                'view/articles/create.php',
+                'view/product/create.php',
             );
         }
     }
@@ -68,14 +68,14 @@ class ArticlesController extends BaseController {
             $id = (int)$_REQUEST['id'];
             $model = Article::GetArticleById($id);
             $model->Delete();
-            parent::RedirectToController('articles');
+            parent::RedirectToController('product');
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $id = (int)$_REQUEST['id'];
             $model = Article::GetArticleById($id);
             parent::RenderPage(
-                'Articles',
+                'Product',
                 'view/layout/layout.php', 
-                'view/articles/delete.php',
+                'view/product/delete.php',
                 $model
             );
         }
@@ -86,9 +86,9 @@ class ArticlesController extends BaseController {
         $id = (int)$_REQUEST['id'];
         $model = vwProduct::GetProductById($id);
         parent::RenderPage(
-            'Articles',
+            'Product',
             'view/layout/layout.php', 
-            'view/articles/details.php',
+            'view/product/details.php',
             $model
         );
     }
@@ -96,24 +96,24 @@ class ArticlesController extends BaseController {
     public function Buy () {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = (int)$_REQUEST['id'];
-            $article = Article::GetArticleById($id);
+            $product = Article::GetArticleById($id);
             $cart = null;
             if (ShoppingCartSession::ShoppingCartExists()) {
                 $cart = ShoppingCartSession::GetShoppingCart();
-                array_push($cart->articles, $article);
+                array_push($cart->product, $product);
             } else {
                 $cart = new ShoppingCart();
-                array_push($cart->articles, $article);
+                array_push($cart->product, $product);
             }
             ShoppingCartSession::StoreShoppingCartInSession($cart);
-            parent::RedirectToController('articles');
+            parent::RedirectToController('product');
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $id = (int)$_REQUEST['id'];
             $model = Article::GetArticleById($id);
             parent::RenderPage(
-                'Articles',
+                'Product',
                 'view/layout/layout.php', 
-                'view/articles/buy.php',
+                'view/product/buy.php',
                 $model
             );
         }

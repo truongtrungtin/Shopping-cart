@@ -28,10 +28,10 @@ USE `cart`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `articles`
+-- Table structure for table `products`
 --
 
-CREATE TABLE `articles` (
+CREATE TABLE `products` (
   `ID` int(11) NOT NULL,
   `CODE` varchar(50) NOT NULL,
   `BRAND` int(11) NOT NULL,
@@ -43,10 +43,10 @@ CREATE TABLE `articles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `articles`
+-- Dumping data for table `products`
 --
 
-INSERT INTO `articles` (`ID`, `CODE`, `BRAND`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE`, `CATEGORYID`) VALUES
+INSERT INTO `products` (`ID`, `CODE`, `BRAND`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE`, `CATEGORYID`) VALUES
 (1, 'LOG102', 1, 'Logitech G102', '224000', 45, 'LogitechG102.png', 1),
 (2, 'LOG502H', 1, 'Logitech G502 Hero', '870000', 9, 'LogitechG502HERO.png', 1),
 (3, 'IP11PM', 2, 'Iphone 11 Pro Max', '23000000', 16, 'Iphone11ProMax.jpg', 2),
@@ -96,13 +96,13 @@ INSERT INTO `category` (`Cate_ID`, `Cate_Name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sales`
+-- Table structure for table `order`
 --
 
-CREATE TABLE `sales` (
+CREATE TABLE `order` (
   `ID` int(11) NOT NULL,
   `USERID` int(11) NOT NULL,
-  `ARTICLEID` int(11) NOT NULL,
+  `PRODUCTID` int(11) NOT NULL,
   `INVOICENUMBER` int(50) NOT NULL,
   `SALEDATE` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -180,16 +180,16 @@ INSERT INTO `users` (`ID`, `NAME`, `LASTNAME`, `PHONE`, `EMAIL`, `USERNAME`, `PA
 --
 DROP TABLE IF EXISTS `carts`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `carts`  AS  select `s`.`ID` AS `ID`,`u`.`USERNAME` AS `USERNAME`,`a`.`CODE` AS `CODE`,`su`.`Supp_Name` AS `SUPPLIER`,`ca`.`Cate_Name` AS `CATEGORY`,`a`.`NAME` AS `NAME`,`u`.`ID` AS `USERID`,`s`.`INVOICENUMBER` AS `INVOICENUMBER`,`s`.`SALEDATE` AS `SALEDATE` from ((((`sales` `s` join `users` `u` on(`s`.`USERID` = `u`.`ID`)) join `articles` `a` on(`s`.`ARTICLEID` = `a`.`ID`)) join `supplier` `su` on(`a`.`BRAND` = `su`.`Supp_ID`)) join `category` `ca` on(`a`.`CATEGORYID` = `ca`.`Cate_ID`)) order by `s`.`INVOICENUMBER` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `carts`  AS  select `s`.`ID` AS `ID`,`u`.`USERNAME` AS `USERNAME`,`a`.`CODE` AS `CODE`,`su`.`Supp_Name` AS `SUPPLIER`,`ca`.`Cate_Name` AS `CATEGORY`,`a`.`NAME` AS `NAME`,`u`.`ID` AS `USERID`,`s`.`INVOICENUMBER` AS `INVOICENUMBER`,`s`.`SALEDATE` AS `SALEDATE` from ((((`order` `s` join `users` `u` on(`s`.`USERID` = `u`.`ID`)) join `products` `a` on(`s`.`PRODUCTID` = `a`.`ID`)) join `supplier` `su` on(`a`.`BRAND` = `su`.`Supp_ID`)) join `category` `ca` on(`a`.`CATEGORYID` = `ca`.`Cate_ID`)) order by `s`.`INVOICENUMBER` ;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `articles`
+-- Indexes for table `products`
 --
-ALTER TABLE `articles`
+ALTER TABLE `products`
   ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `CODE` (`CODE`),
   ADD KEY `fk_cate` (`CATEGORYID`),
@@ -202,11 +202,11 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`Cate_ID`);
 
 --
--- Indexes for table `sales`
+-- Indexes for table `order`
 --
-ALTER TABLE `sales`
+ALTER TABLE `order`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `fk_sale_articles` (`ARTICLEID`),
+  ADD KEY `fk_sale_products` (`PRODUCTID`),
   ADD KEY `fk_sale_users` (`USERID`);
 
 --
@@ -236,9 +236,9 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `articles`
+-- AUTO_INCREMENT for table `products`
 --
-ALTER TABLE `articles`
+ALTER TABLE `products`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
@@ -248,9 +248,9 @@ ALTER TABLE `category`
   MODIFY `Cate_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `sales`
+-- AUTO_INCREMENT for table `order`
 --
-ALTER TABLE `sales`
+ALTER TABLE `order`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -276,17 +276,17 @@ ALTER TABLE `users`
 --
 
 --
--- Constraints for table `articles`
+-- Constraints for table `products`
 --
-ALTER TABLE `articles`
+ALTER TABLE `products`
   ADD CONSTRAINT `fk_cate` FOREIGN KEY (`CATEGORYID`) REFERENCES `category` (`Cate_ID`),
   ADD CONSTRAINT `fk_supp` FOREIGN KEY (`BRAND`) REFERENCES `supplier` (`Supp_ID`);
 
 --
--- Constraints for table `sales`
+-- Constraints for table `order`
 --
-ALTER TABLE `sales`
-  ADD CONSTRAINT `fk_sale_articles` FOREIGN KEY (`ARTICLEID`) REFERENCES `articles` (`ID`),
+ALTER TABLE `order`
+  ADD CONSTRAINT `fk_sale_products` FOREIGN KEY (`PRODUCTID`) REFERENCES `products` (`ID`),
   ADD CONSTRAINT `fk_sale_users` FOREIGN KEY (`USERID`) REFERENCES `users` (`ID`);
 
 
@@ -296,7 +296,7 @@ ALTER TABLE `sales`
 USE `phpmyadmin`;
 
 --
--- Metadata for table articles
+-- Metadata for table products
 --
 
 --
@@ -304,7 +304,7 @@ USE `phpmyadmin`;
 --
 
 INSERT INTO `pma__table_uiprefs` (`username`, `db_name`, `table_name`, `prefs`, `last_update`) VALUES
-('root', 'cart', 'articles', '{\"sorted_col\":\"`CATEGORYID` ASC\"}', '2019-11-21 09:48:30');
+('root', 'cart', 'products', '{\"sorted_col\":\"`CATEGORYID` ASC\"}', '2019-11-21 09:48:30');
 
 --
 -- Metadata for table carts
@@ -315,7 +315,7 @@ INSERT INTO `pma__table_uiprefs` (`username`, `db_name`, `table_name`, `prefs`, 
 --
 
 --
--- Metadata for table sales
+-- Metadata for table order
 --
 
 --
@@ -323,7 +323,7 @@ INSERT INTO `pma__table_uiprefs` (`username`, `db_name`, `table_name`, `prefs`, 
 --
 
 INSERT INTO `pma__table_uiprefs` (`username`, `db_name`, `table_name`, `prefs`, `last_update`) VALUES
-('root', 'cart', 'sales', '[]', '2019-11-21 15:55:16');
+('root', 'cart', 'order', '[]', '2019-11-21 15:55:16');
 
 --
 -- Metadata for table settings
@@ -346,8 +346,8 @@ INSERT INTO `pma__table_uiprefs` (`username`, `db_name`, `table_name`, `prefs`, 
 --
 
 INSERT INTO `pma__relation` (`master_db`, `master_table`, `master_field`, `foreign_db`, `foreign_table`, `foreign_field`) VALUES
-('cart', 'cart.articles', 'BRAND', 'cart', 'cart.supplier', 'Supp_ID'),
-('cart', 'cart.articles', 'CATEGORYID', 'cart', 'cart.category', 'Cate_ID');
+('cart', 'cart.products', 'BRAND', 'cart', 'cart.supplier', 'Supp_ID'),
+('cart', 'cart.products', 'CATEGORYID', 'cart', 'cart.category', 'Cate_ID');
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 

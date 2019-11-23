@@ -2,8 +2,8 @@
 include_once('./security/security.class.php');
 include_once('./session/shoppingcart.session.php');
 include_once('./model/user.class.php');
-include_once('./model/article.class.php');
-include_once('./model/sale.class.php');
+include_once('./model/product.class.php');
+include_once('./model/order.class.php');
 include_once('./model/setting.class.php');
 include_once('./model/shoppingcart.class.php');
 include_once('./model/vwsale.class.php');

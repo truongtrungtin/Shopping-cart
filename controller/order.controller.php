@@ -1,19 +1,19 @@
 <?php
-class SalesController extends BaseController {
+class OrderController extends BaseController {
     
     public function __CONSTRUCT (){}
     
     public function Index () {
         $model = [];
         if ((Security::GetLoggedUser())->getRole() == 'ADMIN') {
-            $model = vwSale::GetAllSales();
+            $model = vwSale::GetAllOrder();
         } else {
-            $model = vwSale::GetAllSalesForUser((Security::GetLoggedUser())->getId());
+            $model = vwSale::GetAllOrderForUser((Security::GetLoggedUser())->getId());
         }
         parent::RenderPage(
-            'Sales', 
+            'Order', 
             'view/layout/layout.php', 
-            'view/sales/sales.php',
+            'view/order/order.php',
             $model
         );
     }

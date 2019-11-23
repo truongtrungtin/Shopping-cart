@@ -2,10 +2,10 @@
 
 class ShoppingCart {
   
-  public $articles;
+  public $product;
 
   public function __construct() {
-    $this->articles = [];
+    $this->product = [];
   }
 
 }

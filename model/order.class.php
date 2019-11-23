@@ -9,9 +9,9 @@ class Sale {
   public function getUserID () { return $this->userID; }
   private function setUserID ($userID) { $this->userID = $userID; }
 
-  private $articleID;
-  public function getArticleID () { return $this->articleID; }
-  private function setArticleID ($articleID) { $this->articleID = $articleID; }
+  private $productID;
+  public function getArticleID () { return $this->productID; }
+  private function setArticleID ($productID) { $this->productID = $productID; }
 
   private $invoiceNumber;
   public function getInvoiceNumber () { return $this->invoiceNumber; }
@@ -23,13 +23,13 @@ class Sale {
 
   public function __construct(
     $userID,
-    $articleID,
+    $productID,
     $invoiceNumber = '',
     $saleDate = '',
     $id = null
   ) {
     $this->userID = $userID;
-    $this->articleID = $articleID;
+    $this->productID = $productID;
     $this->invoiceNumber = $invoiceNumber;
     $this->saleDate = $saleDate;
     $this->id = $id;
@@ -37,11 +37,11 @@ class Sale {
 
   public function Create () {
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('INSERT INTO `sales`(`USERID`, `ARTICLEID`, `INVOICENUMBER`, `SALEDATE`) VALUES (?, ?, ?, ?)');
+    $statement = $db->prepare('INSERT INTO `order`(`USERID`, `PRODUCTID`, `INVOICENUMBER`, `SALEDATE`) VALUES (?, ?, ?, ?)');
     $statement->bind_param(
       'iiss',
       $this->userID,
-      $this->articleID,
+      $this->productID,
       $this->invoiceNumber,
       $this->saleDate
     );
@@ -49,18 +49,18 @@ class Sale {
 
     Setting::IncrementLastInvoiceNumber();
 
-    $article = Article::GetArticleById($this->articleID);
-    $article->setQuantity($article->getQuantity()-1);
-    $article->Edit();
+    $product = Article::GetArticleById($this->productID);
+    $product->setQuantity($product->getQuantity()-1);
+    $product->Edit();
 
   }
 
   public function Edit () {
     $db = (new DataBase())->CreateConnection();
     $statement = $db->prepare(
-      'UPDATE `sales` SET 
+      'UPDATE `order` SET 
         `USERID` = ?,
-        `ARTICLEID` = ?,
+        `PRODUCTID` = ?,
         `INVOICENUMBER`= ?,
         `SALEDATE` = ?
       WHERE `ID` = ?
@@ -69,7 +69,7 @@ class Sale {
     $statement->bind_param(
       'iissi',
       $this->userID,
-      $this->articleID,
+      $this->productID,
       $this->invoiceNumber,
       $this->saleDate,
       $this->id
@@ -79,7 +79,7 @@ class Sale {
 
   public function Delete () {
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('DELETE FROM `sales` WHERE `ID` = ?');
+    $statement = $db->prepare('DELETE FROM `order` WHERE `ID` = ?');
     $statement->bind_param('i', $this->id);
     $statement->execute();
   }

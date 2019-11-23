@@ -1,7 +1,7 @@
 <section class="container">
-  <h2>Create article</h1>
+  <h2>Create product</h1>
     <br>
-    <form class="text-center" action="?c=articles&a=Create" method="POST" autocomplete="off">
+    <form class="text-center" action="?c=product&a=Create" method="POST" autocomplete="off">
       <div class="form-row mb-4">
         <div class="col-2">
           <input type="text" class="form-control" id="code" name="code" placeholder="ID">
@@ -48,7 +48,7 @@
         </div>
       </div>
       <div class="col-md-12">
-        <button type="submit" class="btn btn-primary"><i class="fa fa-cart-plus"></i> Create article</button>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-cart-plus"></i> Create product</button>
       </div>
     </form>
 </section>

@@ -5,7 +5,7 @@
         <h1>Buy Product</h1>
       </header>
       <div class="panel-body">
-        <form action="?c=articles&a=Buy" method="POST">
+        <form action="?c=product&a=Buy" method="POST">
         <input type="hidden" name="id" id="id" value="<?= $MODEL->getId() ?>"/>
           <table class="table table-striped table-hover dt-datatable">
             <thead>

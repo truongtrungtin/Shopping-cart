@@ -5,7 +5,7 @@
       <section class="panel">
         <header class="panel-heading">
           <?php if ((Security::GetLoggedUser())->getRole() == 'ADMIN') { ?>
-            <h1>Sales</h1>
+            <h1>Order</h1>
           <?php } else { ?>
             <h1>Shopping history</h1>
           <?php } ?>

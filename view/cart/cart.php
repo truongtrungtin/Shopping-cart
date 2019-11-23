@@ -18,18 +18,18 @@
             <tbody>
               <td colspan="5" style="text-align:center;">You have no products added in your Shopping Cart</td>
               <?php } else {
-                foreach ($MODEL as $article) {
+                foreach ($MODEL as $product) {
                   ?>
                 <tr class="table-row">
                   <td>
                     <div class="cart-img-product b-rad-4 o-f-hidden">
-                      <img src="./public/upload/Products/<?= $article->getImage() ?>" alt="IMG-PRODUCT">
+                      <img src="./public/upload/Products/<?= $product->getImage() ?>" alt="IMG-PRODUCT">
                     </div>
                   </td>
-                  <td><?= $article->getCode() ?></td>
-                  <td><?= $article->getName() ?></td>
-                  <td><?= number_format($article->getPrice()) . " VNĐ" ?></td>
-                  <td><a href="?c=cart&a=RemoveArticle&id=<?= $article->getCartUniqueId() ?>" class="btn btn-danger btn-sm fa fa-minus-circle"></a></td>
+                  <td><?= $product->getCode() ?></td>
+                  <td><?= $product->getName() ?></td>
+                  <td><?= number_format($product->getPrice()) . " VNĐ" ?></td>
+                  <td><a href="?c=cart&a=RemoveArticle&id=<?= $product->getCartUniqueId() ?>" class="btn btn-danger btn-sm fa fa-minus-circle"></a></td>
                 </tr>
               <?php  } ?>
 
