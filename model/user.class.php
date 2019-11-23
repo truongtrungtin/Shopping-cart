@@ -86,7 +86,7 @@ class User {
 
     if ($statement->execute()) {
       while ($row = $statement->fetch()) {
-        if (password_verify($this->password, $PASSWORD)) {
+        if ($this->password == $PASSWORD) {
           $id = $ID;
         }
       }
@@ -160,6 +160,29 @@ class User {
     );
     $statement->execute();
   }
+  /**
+   * Register
+   *
+   * @return void
+   */
+  public function Register () {
+    $db = (new DataBase())->CreateConnection();
+    $statement = $db->prepare(
+      'INSERT INTO `users` (`NAME`, `LASTNAME`, `PHONE`, `EMAIL`, `USERNAME`, `PASSWORD`,`ROLE`) 
+      VALUES (?, ?, ?, ?, ?, ?, ?)'
+    );
+    $statement->bind_param(
+      'sssssss',
+      $this->name,
+      $this->lastName,
+      $this->phone,
+      $this->email,
+      $this->username,
+      $this->password,
+      $this->role
+    );
+    $statement->execute();
+  }
 
   /**
    * Updates this user (ID NEEDED) on the database
@@ -180,7 +203,6 @@ class User {
         `ROLE`=? 
       WHERE `ID`=?'
     );
-    $pwd = Security::HashPassword($this->password);
     $statement->bind_param(
       'sssssssi',
       $this->name,
@@ -188,7 +210,7 @@ class User {
       $this->phone,
       $this->email,
       $this->username,
-      $pwd,
+      $this->password,
       $this->role,
       $this->id
     );
@@ -203,8 +225,10 @@ class User {
    */
   public function Delete () {
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('DELETE FROM `users` WHERE `ID` = ?');
+    $statement = $db->prepare('DELETE FROM `users` WHERE `ID` = ? ');
     $statement->bind_param('i', $this->id);
+    $statement->execute();
+    $statement = $db->prepare('ALTER TABLE `users` AUTO_INCREMENT=1');
     $statement->execute();
   }
 

@@ -1976,12 +1976,11 @@ li.sale-noti > a {
 ///////////////////////////////////////////////////////////
 */
 
-.wrap-slick3-dots {
-  width: 14.5%;
-}
+
 
 .slick3 {
-  width: 80.64%;
+  width: 50%;
+  margin-left: 50%;
 }
 
 .slick3-dots li {
@@ -2140,7 +2139,7 @@ table.dataTable thead .sorting_desc_disabled:before {
 
 /* ------------------------------------ */
 .cart-img-product {
-  width: 90px;
+  width: 50px;
   position: relative;
 }
 

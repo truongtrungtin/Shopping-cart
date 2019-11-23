@@ -12,7 +12,7 @@ class ArticlesController extends BaseController {
             $model
         );
     }
-    
+    // Product
     public function Edit () {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $model = new Article(
@@ -23,6 +23,7 @@ class ArticlesController extends BaseController {
                 $_REQUEST['quantity'],
                 $_REQUEST['image'],
                 $_REQUEST['categoryid'],
+                $_REQUEST['description'],
                 $_REQUEST['id'],
             );
             $model->Edit();
@@ -49,6 +50,7 @@ class ArticlesController extends BaseController {
                 $_REQUEST['quantity'],
                 $_REQUEST['image'],
                 $_REQUEST['categoryid'],
+                $_REQUEST['description'],
             );
             $model->Create();
             parent::RedirectToController('articles');
@@ -56,7 +58,7 @@ class ArticlesController extends BaseController {
             parent::RenderPage(
                 'Articles',
                 'view/layout/layout.php', 
-                'view/articles/create.php'
+                'view/articles/create.php',
             );
         }
     }
@@ -78,10 +80,11 @@ class ArticlesController extends BaseController {
             );
         }
     }
-
+    // Detail product
+    
     public function Details () {
         $id = (int)$_REQUEST['id'];
-        $model = Article::GetArticleById($id);
+        $model = vwProduct::GetProductById($id);
         parent::RenderPage(
             'Articles',
             'view/layout/layout.php', 
@@ -115,6 +118,7 @@ class ArticlesController extends BaseController {
             );
         }
     }
+
 
 }
 

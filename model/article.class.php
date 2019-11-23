@@ -5,7 +5,7 @@ class Article {
   
   private $id;
   public function getId () { return $this->id; }
-  private function setId ($id) { $this->id = $id; }
+  public function setId ($id) { $this->id = $id; }
 
   private $code; 
   public function getCode () { return $this->code; }
@@ -35,6 +35,9 @@ class Article {
   public function getCategoryid () { return $this->categoryid; }
   public function setCategoryid ($categoryid) { $this->categoryid = $categoryid; }
 
+  private $description;
+  public function getDescription () { return $this->description; }
+  public function setDescription ($description) { $this->description = $description; }
   /* No-mapped */
 
   private $cartUniqueId;
@@ -43,12 +46,13 @@ class Article {
 
   public function __construct(
     $code = '',
-    $supplierid = 0,
+    $supplierid = '',
     $name = '',
     $price = 0,
     $quantity = 0,
     $image = '',
-    $categoryid = 0,
+    $categoryid = '',
+    $description = '',
     $id = null
   ) {
     $this->code = $code;
@@ -58,6 +62,7 @@ class Article {
     $this->quantity = $quantity;
     $this->image = $image;
     $this->categoryid = $categoryid;
+    $this->description = $description;
     $this->id = $id;
     
     $this->cartUniqueId = uniqid('CART_');
@@ -66,27 +71,25 @@ class Article {
   public static function GetArticleById ($id) {
     $model = null;
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('SELECT `CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE`, `CATEGORYID` , `ID` FROM `articles` WHERE `ID` = ?');
+    $statement = $db->prepare('SELECT `CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE`, `CATEGORYID` , `DESCRIPTION` , `ID` FROM `articles` WHERE `ID` = ?');
     $statement->bind_param('i', $id);
-    $statement->bind_result($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $ID);
+    $statement->bind_result($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $DESCRIPTION , $ID);
     if ($statement->execute()) {
       while ($row = $statement->fetch()) {
-        $model = new Article($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $ID);
+        $model = new Article($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $DESCRIPTION , $ID);
       }
     }
     return $model;
   }
 
-
-
   public static function GetAllArticles () {
     $models = [];
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('SELECT `CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE` , `CATEGORYID` , `ID` FROM `articles` ');
-    $statement->bind_result($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $ID);
+    $statement = $db->prepare('SELECT `CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE` , `CATEGORYID` , `DESCRIPTION` , `ID` FROM `articles` ');
+    $statement->bind_result($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $DESCRIPTION , $ID);
     if ($statement->execute()) {
       while ($row = $statement->fetch()) {
-        $model = new Article($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $ID);
+        $model = new Article($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $DESCRIPTION , $ID);
         array_push($models, $model);
       }
     }
@@ -95,9 +98,9 @@ class Article {
 
   public function Create () {
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('INSERT INTO `articles`(`CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE` , `CATEGORYID` ) VALUES (?, ?, ?, ?, ?, ?, ?)');
+    $statement = $db->prepare('INSERT INTO `articles`(`CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE` , `CATEGORYID` , `DESCRIPTION`)  VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
     $statement->bind_param(
-      'sisdisi',
+      'sssdisss',
       $this->code,
       $this->supplierid,
       $this->name,
@@ -105,6 +108,7 @@ class Article {
       $this->quantity,
       $this->image,
       $this->categoryid,
+      $this->description,
     );
     $statement->execute();
   }
@@ -119,11 +123,12 @@ class Article {
         `PRICE` = ?,
         `QUANTITY` = ?,
         `IMAGE` = ? ,
-        `CATEGORYID` =?
+        `CATEGORYID` =?,
+        `DESCRIPTION` =?
       WHERE `ID` = ?'
     );
     $statement->bind_param(
-      'sisdisii',
+      'sssdisssi',
       $this->code,
       $this->supplierid,
       $this->name,
@@ -131,6 +136,7 @@ class Article {
       $this->quantity,
       $this->image,
       $this->categoryid,
+      $this->description,
       $this->id
     );
     $statement->execute();
@@ -140,6 +146,8 @@ class Article {
     $db = (new DataBase())->CreateConnection();
     $statement = $db->prepare('DELETE FROM `articles` WHERE `ID` = ?');
     $statement->bind_param('i', $this->id);
+    $statement->execute();
+    $statement = $db->prepare('ALTER TABLE `articles` AUTO_INCREMENT=1');
     $statement->execute();
   }
 

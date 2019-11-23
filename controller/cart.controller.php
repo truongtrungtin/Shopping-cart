@@ -16,7 +16,7 @@ class CartController extends BaseController {
 
     public function Empty () {
         ShoppingCartSession::RemoveShoppingCartFromSession();
-        parent::RedirectToController('articles');
+        parent::RedirectToController('cart');
     }
 
     public function RemoveArticle () {
@@ -31,7 +31,7 @@ class CartController extends BaseController {
             parent::RedirectToController('cart');
         } else {
             ShoppingCartSession::RemoveShoppingCartFromSession();
-            parent::RedirectToController('articles');
+            parent::RedirectToController('cart');
         }
     }
     

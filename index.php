@@ -7,6 +7,8 @@ include_once('./model/sale.class.php');
 include_once('./model/setting.class.php');
 include_once('./model/shoppingcart.class.php');
 include_once('./model/vwsale.class.php');
+include_once('./model/vwproduct.class.php');
+include_once('./model/manage.class.php');
 include_once('./database/database.class.php');
 include_once('./controller/base.controller.php');
 

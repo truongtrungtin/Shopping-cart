@@ -1,31 +1,49 @@
-<div class="row">
-  <div class="col-lg-6">
-    <section class="panel">
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8">
       <header class="panel-heading">
-        <h1>Buy article</h1>
-        <a href="?c=articles">Back</a>
+        <h1>Buy Product</h1>
       </header>
       <div class="panel-body">
         <form action="?c=articles&a=Buy" method="POST">
-          <input type="hidden" name="id" id="id" value="<?= $MODEL->getId() ?>" />
-          <dl class="dl-horizontal">
-            <dt>ID</dt>
-            <dd><?= $MODEL->getCode() ?></dd>
-            <dt>Supplierid</dt>
-            <dd><?= $MODEL->getSupplierid() ?></dd>
-            <dt>Name</dt>
-            <dd><?= $MODEL->getName() ?></dd>
-            <dt>Price</dt>
-            <dd><?= number_format($MODEL->getPrice()) . " VNĐ" ?></dd>
-            <?php if ($MODEL->getQuantity() < 1) { ?>
-              <dt>Quantity</dt>
-              <dd>Hết Hàng</dd>
-            <?php } else { ?>
-              <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-cart-plus"></i> Add to cart</button>
-            <?php } ?>
-          </dl>
+        <input type="hidden" name="id" id="id" value="<?= $MODEL->getId() ?>"/>
+          <table class="table table-striped table-hover dt-datatable">
+            <thead>
+              <tr>
+                <td>Image</td>
+                <td>Code</td>
+                <td>Name</td>
+                <td>Supplier</td>
+                <td>Category</td>
+                <td>Price</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table-row">
+                <td>
+                  <div class="cart-img-product">
+                    <img src="./public/upload/Products/<?= $MODEL->getImage() ?>" alt="IMG-PRODUCT">
+                  </div>
+                </td>
+                <td><?= $MODEL->getCode() ?></td>
+                <td><?= $MODEL->getName() ?></td>
+                <td><?= $MODEL->getSupplierid() ?></td>
+                <td><?= $MODEL->getCategoryid() ?></td>
+                <td><?= number_format($MODEL->getPrice()) . " VNĐ" ?></td>
+                <?php if ($MODEL->getQuantity() < 1) { ?>
+                  <td>Out of stock</td>
+                <?php } else { ?>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td> <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-cart-plus"></i> Add to cart</button></td>
+              </tr>
+            </tfoot>
+          <?php  } ?>
+          </table>
         </form>
       </div>
-    </section>
+    </div>
   </div>
 </div>

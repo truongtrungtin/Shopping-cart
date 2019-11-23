@@ -31,14 +31,19 @@
         </div>
         <div class="col">
           <label for="supplierid">Supplier ID</label>
-
           <input value="<?= $MODEL->getSupplierid() ?>" type="text" class="form-control" id="supplierid" name="supplierid" placeholder="Supplierid">
         </div>
       </div>
       <div class="form-row mb-4">
-      <div class="custom-file col ">
+        <div class="col">
+          <label for="comment">Description</label>
+          <textarea type="text" rows="5" class="form-control" id="description" name="description"><?= $MODEL->getDescription() ?></textarea>
+        </div>
+      </div>
+      <div class="form-row mb-4">
+        <div class="custom-file col">
           <label class="custom-file-label" for="customFile">Image</label>
-          <input value="<?= $MODEL->getImage() ?>" type="file" class="custom-file-input" id="customFile" name="image">
+          <input value="<?= $MODEL->getImage() ?>" type="file" class="custom-file-input" id="comment" name="image">
         </div>
       </div>
       <div class="col-md-12">

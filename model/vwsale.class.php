@@ -13,7 +13,6 @@ class vwSale {
   public function getUsername () { return $this->username; }
   public function setUsername ($username) { $this->username = $username; }
 
-
   private $code; 
   public function getCode () { return $this->code; }
   public function setCode ($code) { $this->code = $code; }
@@ -38,6 +37,7 @@ class vwSale {
   public function getSaleDate () { return $this->saleDate; }
   private function setSaleDate ($saleDate) { $this->saleDate = $saleDate; }
 
+
   public function __construct(
     $userid = 0,
     $username = '',
@@ -47,6 +47,12 @@ class vwSale {
     $name = '',
     $invoiceNumber = 0,
     $saleDate = '',
+    $description = '',
+    $image = '',
+    $quantity = 0,
+    $price = 0,
+    $supplierid= 0,
+    $categoryid = 0,
     $id = null
   ) {
     $this->userid= $userid;
@@ -57,22 +63,30 @@ class vwSale {
     $this->name = $name;
     $this->invoiceNumber = $invoiceNumber;
     $this->saleDate = $saleDate;
+    $this->description = $description;
+    $this->image = $image;
+    $this->quantity = $quantity;
+    $this->price = $price;
+    $this->supplierid = $supplierid;
+    $this->categoryid = $categoryid;
     $this->id = $id;
   }
 
   public static function GetSaleById ($id) {
     $model = null;
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('SELECT `USERID` , `USERNAME`, `CODE`, `SUPPLIER`, `CATEGORY` , `NAME` `INVOICENUMBER`, `SALEDATE`, `ID` FROM `carts` WHERE `ID` = ?');
+    $statement = $db->prepare('SELECT `USERID` , `USERNAME`, `CODE`, `SUPPLIER`, `CATEGORY` , `NAME` , `INVOICENUMBER`, `SALEDATE`, `ID` FROM `carts` WHERE `ID` = ?');
     $statement->bind_param('i', $id);
-    $statement->bind_result(  $USERID ,$USERNAME, $CODE, $SUPPLIER, $CATEGORY , $NAME, $INVOICENUMBER, $SALEDATE, $ID);
+    $statement->bind_result(  $USERID , $USERNAME, $CODE, $SUPPLIER, $CATEGORY , $NAME, $INVOICENUMBER, $SALEDATE, $ID);
     if ($statement->execute()) {
       while ($row = $statement->fetch()) {
-        $model = new vwSale(  $USERID ,$USERNAME, $CODE, $SUPPLIER, $CATEGORY , $NAME, $INVOICENUMBER, $SALEDATE, $ID);
+        $model = new vwSale(  $USERID , $USERNAME, $CODE, $SUPPLIER, $CATEGORY , $NAME, $INVOICENUMBER, $SALEDATE, $ID);
       }
     }
     return $model;
   }
+
+
 
   public static function GetAllSales () {
     $models = [];

@@ -14,7 +14,6 @@
   <link rel="stylesheet" type="text/css" href="./public/vendor/daterangepicker/daterangepicker.css">
   <link rel="stylesheet" type="text/css" href="./public/vendor/slick/slick.css">
   <link rel="stylesheet" type="text/css" href="./public/vendor/lightbox2/css/lightbox.min.css">
-
   <link rel="stylesheet" type="text/css" href="./public/css/util.css">
   <link rel="stylesheet" type="text/css" href="./public/css/main.css">
   <!--  -->
@@ -27,11 +26,7 @@
     <div class="container-menu-header">
       <?php include('_navbar.php'); ?>
     </div>
-    <div>
-      <?php include('_sidebar.php'); ?>
-    </div>
   </header>
-  |
   <?= $MASTER_CONTENT ?>
 
 
@@ -44,18 +39,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script>
-    $(document).ready(function() {
-      $('#dtBasicExample').DataTable();
-      $('.dataTables_length').addClass('bs-select');
-    });
-
     // Add the following code if you want the name of the file appear on select
     $(".custom-file-input").on("change", function() {
       var fileName = $(this).val().split("\\").pop();
       $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
+
   </script>
-  <script type="text/javascript" src="./public/vendor/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="./public/vendor/slick/slick.min.js"></script>
   <script type="text/javascript" src="./public/js/slick-custom.js"></script>
   <script type="text/javascript" src="./public/vendor/countdowntime/countdowntime.js"></script>
@@ -64,7 +54,6 @@
   <!-- product -->
   <script type="text/javascript" src="./public/vendor/daterangepicker/moment.min.js"></script>
   <script type="text/javascript" src="./public/vendor/daterangepicker/daterangepicker.js"></script>
-  <script type="text/javascript" src="./public/vendor/noui/nouislider.js"></script>
   <script src="./public/js/main.js"></script>
   <!-- end text/javascrip -->
 </body>

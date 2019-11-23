@@ -1,23 +1,41 @@
-<div class="row">
-  <div class="col-lg-6">
-    <section class="panel">
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8">
       <header class="panel-heading">
-        <h1>Delete article</h1>
-        <a href="?c=articles">Back</a>
+        <h1>Delete Product</h1>
       </header>
       <div class="panel-body">
-        <form action="?c=articles&a=Delete" method="POST">
-          <input type="hidden" name="id" id="id" value="<?= $MODEL->getId() ?>" />
-          <dl class="dl-horizontal">
-            <dt>ID</dt><dd><?= $MODEL->getCode() ?></dd>
-            <dt>Supplierid</dt><dd><?= $MODEL->getSupplierid() ?></dd>
-            <dt>Name</dt><dd><?= $MODEL->getName() ?></dd>
-            <dt>Price</dt><dd><?= $MODEL->getPrice() ?></dd>
-            <dt>Quantity</dt><dd><?= $MODEL->getQuantity() ?></dd>
-          </dl>
-          <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Delete article</button>
-        </form>
+        <table class="table table-striped table-hover dt-datatable">
+          <form action="?c=users&a=Delete" method="POST">
+            <input type="hidden" name="id" id="id" value="<?= $MODEL->getId() ?>" />
+            <thead>
+              <tr>
+                <td>Code</td>
+                <td>Name</td>
+                <td>Price</td>
+                <td>Quantity</td>
+                <td>Supplier</td>
+                <td>Category</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table-row">
+                <td><?= $MODEL->getCode() ?></td>
+                <td><?= $MODEL->getName() ?></td>
+                <td><?= $MODEL->getPrice() ?></td>
+                <td><?= $MODEL->getQuantity() ?></td>
+                <td><?= $MODEL->getSupplierid() ?></td>
+                <td><?= $MODEL->getCategoryid() ?></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td><button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</button></td>
+              </tr>
+            </tfoot>
+          </form>
+        </table>
       </div>
-    </section>
+    </div>
   </div>
 </div>
