@@ -1,26 +1,47 @@
 <?php
-class ManageController extends BaseController {
+class SupplierController extends BaseController {
     
     public function __CONSTRUCT (){}
     
     public function Index () {
+        $model = Supplier::GetAllSupplier();
         parent::RenderPage(
-            'Manage', 
+            'Supplier', 
             'view/layout/layout.php', 
-            'view/manage/manage.php',
+            'view/supplier/supplier.php',
+            $model
         );
     }
 
-    public function CreateSupplier () {
+    public function Create () {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $model = new Supplier(
-                $_REQUEST['supp_id'],
                 $_REQUEST['supp_name'], 
                 $_REQUEST['supp_phone'],
                 $_REQUEST['supp_address'],
             );
             $model->Create();
-            parent::RedirectToController('product');
+            parent::RedirectToController('supplier');
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            parent::RenderPage(
+                'Supplier', 
+                'view/layout/layout.php', 
+                'view/supplier/create.php',
+                $model,
+            );
+        }
+    }
+
+    public function Edit () {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $model = new Supplier(
+                $_REQUEST['supp_name'], 
+                $_REQUEST['supp_phone'],
+                $_REQUEST['supp_address'],
+                $_REQUEST['supp_id']
+            );
+            $model->Edit();
+            parent::RedirectToController('supplier');
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             parent::RenderPage(
                 'Manage', 
@@ -31,25 +52,5 @@ class ManageController extends BaseController {
         }
     }
 
-    public function CreateCategory () {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $model = new Supplier(
-                $_REQUEST['supp_id'],
-                $_REQUEST['supp_name'], 
-                $_REQUEST['supp_phone'],
-                $_REQUEST['supp_address'],
-                
-            );
-            $model->Create();
-            parent::RedirectToController('product');
-        } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            parent::RenderPage(
-                'Product',
-                'view/layout/layout.php', 
-                'view/product/create.php',
-                $model
-            );
-        }
-    }
 
 }

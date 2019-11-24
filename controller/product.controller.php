@@ -55,10 +55,12 @@ class ProductController extends BaseController {
             $model->Create();
             parent::RedirectToController('product');
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $model = Supplier::GetAllSupplier();
             parent::RenderPage(
                 'Product',
                 'view/layout/layout.php', 
                 'view/product/create.php',
+                $model
             );
         }
     }

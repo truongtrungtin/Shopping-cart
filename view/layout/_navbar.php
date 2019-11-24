@@ -24,8 +24,13 @@
               </a>
             </li>
             <li>
-              <a href="?c=manage" class="<?= (($PAGE == 'Manage') ? 'active' : '') ?>">
-                <i class="fa fa-product-hunt" aria-hidden="true"></i>&nbsp;Manage
+              <a href="?c=supplier" class="<?= (($PAGE == 'Supplier') ? 'active' : '') ?>">
+                <i class="fa fa-truck" aria-hidden="true"></i>&nbsp;Supplier
+              </a>
+            </li>
+            <li>
+              <a href="?c=category" class="<?= (($PAGE == 'Category') ? 'active' : '') ?>">
+                <i class="fa fa-suitcase" aria-hidden="true"></i>&nbsp;Category
               </a>
             </li>
           <?php } ?>

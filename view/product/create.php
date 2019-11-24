@@ -8,10 +8,9 @@
         </div>
         <div class="col-4">
           <select name="supplierid" id="supplierid" class="form-control">
-              <option value="" selected="selected">Choose Supplier</option>
-              <option value="Logitech">Logitech</option>
-              <option value="Apple">Apple</option>
-              <option value="SamSung">SamSung</option>
+              <?php foreach ($MODEL as $supplier) {?>
+              <option value="<?= $supplier->getId() ?>" selected="selected"><?= $supplier->getSupplier() ?></option>
+              <?php }?>
           </select>
         </div>
         <div class="col-6">
@@ -29,12 +28,7 @@
       <div class="form-row">
         <div class="form-group col-6">
           <div class="form-group">
-          <select name="categoryid" id="categoryid" class="form-control">
-              <option value="" selected="selected">Choose Category</option>
-              <option value="Mouse">Mouse</option>
-              <option value="Phone">Phone</option>
-              <option value="Watch">Watch</option>
-          </select>
+            <input type="number" class="form-control" id="categoryid" name="categoryid" placeholder="category ID">
           </div>
           <div class="form-group">
             <div class="custom-file">

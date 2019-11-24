@@ -5,39 +5,39 @@ class Product {
   
   private $id;
   public function getId () { return $this->id; }
-  public function setId ($id) { $this->id = $id; }
+  private function setId ($id) { $this->id = $id; }
 
   private $code; 
   public function getCode () { return $this->code; }
-  public function setCode ($code) { $this->code = $code; }
+  private function setCode ($code) { $this->code = $code; }
 
   private $supplierid; 
   public function getSupplierid () { return $this->supplierid; }
-  public function setSupplierid ($supplierid) { $this->supplierid = $supplierid; }
+  private function setSupplierid ($supplierid) { $this->supplierid = $supplierid; }
 
   private $name; 
   public function getName () { return $this->name; }
-  public function setName ($name) { $this->name = $name; }
+  private function setName ($name) { $this->name = $name; }
 
   private $price; 
   public function getPrice () { return $this->price; }
-  public function setPrice ($price) { $this->price = $price; }
+  private function setPrice ($price) { $this->price = $price; }
 
   private $quantity; 
   public function getQuantity () { return $this->quantity; }
-  public function setQuantity ($quantity) { $this->quantity = $quantity; }
+  private function setQuantity ($quantity) { $this->quantity = $quantity; }
 
   private $image;
   public function getImage () { return $this->image; }
-  public function setImage ($image) { $this->image = $image; }
+  private function setImage ($image) { $this->image = $image; }
   
   private $categoryid;
   public function getCategoryid () { return $this->categoryid; }
-  public function setCategoryid ($categoryid) { $this->categoryid = $categoryid; }
+  private function setCategoryid ($categoryid) { $this->categoryid = $categoryid; }
 
   private $description;
   public function getDescription () { return $this->description; }
-  public function setDescription ($description) { $this->description = $description; }
+  private function setDescription ($description) { $this->description = $description; }
   /* No-mapped */
 
   private $cartUniqueId;
@@ -46,12 +46,12 @@ class Product {
 
   public function __construct(
     $code = '',
-    $supplierid = '',
+    $supplierid = 0,
     $name = '',
     $price = 0,
     $quantity = 0,
     $image = '',
-    $categoryid = '',
+    $categoryid = 0,
     $description = '',
     $id = null
   ) {
@@ -85,7 +85,7 @@ class Product {
   public static function GetAllProduct () {
     $models = [];
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('SELECT `CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE` , `CATEGORYID` , `DESCRIPTION` , `ID` FROM `product` ');
+    $statement = $db->prepare('SELECT `CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE` , `CATEGORYID` , `DESCRIPTION` , `ID` FROM `product` LIMIT 9 ');
     $statement->bind_result($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $DESCRIPTION , $ID);
     if ($statement->execute()) {
       while ($row = $statement->fetch()) {
@@ -100,7 +100,7 @@ class Product {
     $db = (new DataBase())->CreateConnection();
     $statement = $db->prepare('INSERT INTO `product`(`CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE` , `CATEGORYID` , `DESCRIPTION`)  VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
     $statement->bind_param(
-      'sssdisss',
+      'sisdisis',
       $this->code,
       $this->supplierid,
       $this->name,
@@ -128,7 +128,7 @@ class Product {
       WHERE `ID` = ?'
     );
     $statement->bind_param(
-      'sssdisssi',
+      'sisdissii',
       $this->code,
       $this->supplierid,
       $this->name,

@@ -155,4 +155,18 @@ class vwProduct
     }
     return $model;
   }
+
+  public static function GetAllProduct () {
+    $models = [];
+    $db = (new DataBase())->CreateConnection();
+    $statement = $db->prepare('SELECT  `CODE` , `SUPPLIER` , `CATEGORY` , `NAME` , `DESCRIPTION`, `IMAGE`, `QUANTITY` , `PRICE` , `SUPPLIERID`, `CATEGORYID`, `ID` FROM `products` ');
+    $statement->bind_result( $CODE, $SUPPLIER, $CATEGORY, $NAME, $DESCRIPTION, $IMAGE, $QUANTITY, $PRICE, $SUPPLIERID, $CATEGORYID, $ID);
+    if ($statement->execute()) {
+      while ($row = $statement->fetch()) {
+        $model = new vwProduct( $CODE, $SUPPLIER, $CATEGORY, $NAME, $DESCRIPTION, $IMAGE, $QUANTITY, $PRICE, $SUPPLIERID, $CATEGORYID, $ID);
+        array_push($models, $model);
+      }
+    }
+    return $models;
+  }
 }

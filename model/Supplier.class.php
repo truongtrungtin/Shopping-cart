@@ -1,6 +1,6 @@
 <?php
 
-class Manage
+class Supplier
 {
 
   private $id;
@@ -61,12 +61,12 @@ class Manage
   {
     $model = null;
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('SELECT `Supp_ID` , `Supp_Name` , `Supp_Phone`, `Supp_Address`FROM `products` WHERE `Supp_ID` = ?');
-    $statement->bind_result($ID, $SUPPLIER, $PHONE, $ADDRESS);
+    $statement = $db->prepare('SELECT `Supp_Name` , `Supp_Phone`, `Supp_Address` , `Supp_ID` FROM `supplier` WHERE `Supp_ID` = ?');
+    $statement->bind_result( $SUPPLIER, $PHONE, $ADDRESS , $ID);
     $statement->bind_param('i', $id);
     if ($statement->execute()) {
       while ($row = $statement->fetch()) {
-        $model = new Manage($ID, $SUPPLIER, $PHONE, $ADDRESS);
+        $model = new Supplier( $SUPPLIER, $PHONE, $ADDRESS , $ID);
       }
     }
     return $model;
@@ -76,23 +76,22 @@ class Manage
   {
     $models = [];
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('SELECT `Supp_ID` , `Supp_Name` , `Supp_Phone`, `Supp_Address` FROM `supplier`');
-    $statement->bind_result($ID, $SUPPLIER, $PHONE, $ADDRESS);
+    $statement = $db->prepare('SELECT `Supp_Name` , `Supp_Phone`, `Supp_Address` , `Supp_ID`  FROM `supplier`');
+    $statement->bind_result( $SUPPLIER, $PHONE, $ADDRESS , $ID);
     if ($statement->execute()) {
       while ($row = $statement->fetch()) {
-        $model = new Manage($ID, $SUPPLIER, $PHONE, $ADDRESS);
+        $model = new Supplier( $SUPPLIER, $PHONE, $ADDRESS , $ID);
         array_push($models, $model);
       }
     }
-    return $model;
+    return $models;
   }
   
   public function Create () {
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('INSERT INTO `supplier`(`Supp_ID`, `Supp_Name`, `Supp_Phone`, `Supp_Address`)  VALUES (?, ?, ?, ?)');
+    $statement = $db->prepare('INSERT INTO `supplier`(`Supp_Name`, `Supp_Phone`, `Supp_Address`)  VALUES ( ?, ?, ?)');
     $statement->bind_param(
-      'ssss',
-      $this->id,
+      'sss',
       $this->supplier,
       $this->phone,
       $this->address,
@@ -110,7 +109,7 @@ class Manage
       WHERE `Supp_ID` = ?'
     );
     $statement->bind_param(
-      'ssss',
+      'sssi',
       $this->supplier,
       $this->phone,
       $this->address,
@@ -121,7 +120,7 @@ class Manage
 
   public function Delete () {
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('DELETE FROM `supplier` WHERE `ID` = ?');
+    $statement = $db->prepare('DELETE FROM `supplier` WHERE `Supp_ID` = ?');
     $statement->bind_param('i', $this->id);
     $statement->execute();
   }
