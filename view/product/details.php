@@ -5,7 +5,7 @@
       <div class="wrap-slick3 flex-sb flex-w">
         <div class="slick3">
           <div class="wrap-pic-w">
-            <img src="./public/upload/Products/<?php echo $MODEL->getImage() ?>" alt="IMG-PRODUCT">
+            <img src="./public/upload/Products/<?php echo  ?>" alt="IMG-PRODUCT">
           </div>
         </div>
       </div>
