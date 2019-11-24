@@ -7,10 +7,10 @@ class DataBase {
   private $password;
 
   public function __construct(
-    $hostname= 'localhost',
-    $database= 'cart',
-    $username= 'root',
-    $password= ''
+    $hostname= 'us-cdbr-iron-east-05.cleardb.net',
+    $database= 'heroku_d9b83df241f5abb',
+    $username= 'b7818a642ba7bd',
+    $password= '87f2cf60'
   ) {
     $this->hostname = $hostname;
     $this->database= $database;
