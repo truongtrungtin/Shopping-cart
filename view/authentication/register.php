@@ -1,5 +1,5 @@
 <section class="container">
-    <h2>Create User</h2>
+    <h2>Register</h2>
     <form class="text-center" action="?c=authentication&a=Register" method="POST" autocomplete="off">
         <div class="form-row mb-4">
             <div class="col">
@@ -33,7 +33,7 @@
             <input type="hidden" class="form-control" id="role" name="role" value="CLIENT">
         </div>
         <div class="col-md-4">
-            <button type="submit" class="btn btn-primary"><i class="fa fa-cart-plus"></i> Create</button>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-cart-plus"></i> Register</button>
         </div>
     </form>
 </section>

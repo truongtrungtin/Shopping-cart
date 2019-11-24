@@ -12,7 +12,7 @@
         <input value="<?= $MODEL->getUsername() ?>" type="text" class="form-control" id="username" name="username" placeholder="User" <?= (Security::GetLoggedUser())->getRole() == 'CLIENT' ? 'disabled="disabled"' : '' ?>>
       </div>
       <div class="col-6">
-        <input value="<?= $MODEL->getPassword() ?>" type="text" class="form-control" id="password" name="password" placeholder="Password">
+        <input value="<?= $MODEL->getPassword() ?>" type="password" class="form-control" id="password" name="password" placeholder="Password">
       </div>
     </div>
     <div class="form-row mb-4">

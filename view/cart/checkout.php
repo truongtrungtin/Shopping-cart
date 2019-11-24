@@ -30,7 +30,7 @@
                       </td>
                       <td><?= $product->getCode() ?></td>
                       <td><?= $product->getName() ?></td>
-                      <td><?= $product->getQuantity() ?> </td>
+                      <td>1 </td>
                       <td><?= number_format($product->getPrice()) . " VNĐ" ?></td>
                     </tr>
                   <?php } ?>
@@ -40,15 +40,17 @@
                     <td>
                       <button type="submit" class="btn btn-block btn-lg btn-success"><i class="fa fa-shield"></i> Make a purchase</button>
                     </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <div>
+                        <b>Total:</b>
+                        <?= number_format(array_sum(array_map(function ($element) {
+                            return $element->getPrice();
+                          }, $MODEL))) ." VNĐ"; ?>
+                      </div>
+                    </td>
                   </tr>
-                  <div>
-                    <b>Total:</b>
-                    <?= array_sum(array_map(function ($element) {
-                        return $element->getPrice() . " VNĐ";
-                      }, $MODEL)); ?>
-                  </div>
-                  <div class="m-top15">
-                  </div>
                 </tfoot>
             </form>
             </table>

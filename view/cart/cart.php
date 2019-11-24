@@ -14,9 +14,7 @@
               <td></td>
               <td>Code</td>
               <td>Product</td>
-              <td>Quantiy</td>
               <td>Price</td>
-              <td>Total</td>
               <td>Delete</td>
             </tr>
           </thead>
@@ -33,28 +31,20 @@
                       <input type="hidden" name="id" id="id" value="<?= $product->getId() ?>" />
                     </div>
                   </td>
-                  <td><?= $_POST["num-quantity-".$product->getCode()] ?></td>
                   <td><?= $product->getCode() ?></td>
                   <td><?= $product->getName() ?></td>
-                  <td>
-                    <input class="size8 m-text18 t-center num-product" type="number" name="num-quantity-<?= $product->getCode() ?>" value="<?php echo $_POST["num-quantity-".$product->getCode()]?>" min="1" required>
-                  </td>
                   <td><?= number_format($product->getPrice()) . " VNĐ" ?></td>
-                  <td><?= number_format($_REQUEST["num-quantity-".$product->getCode()] * $product->getPrice()) . " VNĐ" ?></td>
                   <td><a href="?c=cart&a=RemoveProduct&id=<?= $product->getCartUniqueId() ?>" class="btn btn-danger btn-sm fa fa-minus-circle"></a></td>
                 </tr>
               <?php  } ?>
             </tbody>
             <tfoot>
               <tr>
-                <td> </td>
                 <td> <button type='submit' name='checkout' class="btn btn-success"><i class="fa fa-shopping-cart"> Check Out</i></a></td>
                 <td> <a href="?c=cart&a=Empty" class="btn btn-danger"><i class="fa fa-trash"></i> Empty cart</a></td>
-                <td> <button type='submit' class="btn btn-warning"> Update</a>
-                <td></td>
-                <td> Subtotal:</td>
-                <td><?= number_format(array_sum(array_map(function ($element) {
-                        return $element->getPrice() * $_REQUEST["num-quantity-" . $element->getCode()];
+                <td> </td>
+                <td> <b>TOTAL:</b> <?= number_format(array_sum(array_map(function ($element) {
+                        return $element->getPrice();
                       }, $MODEL))) . " VNĐ"; ?></td>
               </tr>
             </tfoot>

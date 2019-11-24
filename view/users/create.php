@@ -8,7 +8,7 @@
         </div>
         <div class="col">
           <label for="password">Password</label>
-          <input type="text" class="form-control" id="password" name="password" placeholder="Password">
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password">
         </div>
       </div>
       <div class="form-row mb-4">

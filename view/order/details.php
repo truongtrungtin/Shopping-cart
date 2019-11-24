@@ -10,24 +10,27 @@
         <table class="table table-striped table-bordered table-sm" >
           <thead>
             <tr>
+              <th class="th-sm">Code</th>
               <th class="th-sm">Product</th>
-              <th class="th-sm">Quantity</th>
-              <th class="th-sm">Unit Price</th>
-              <th class="th-sm">Total Price</th>
+              <th class="th-sm">Category</th>
+              <th class="th-sm">Supplier</th>
+              <th class="th-sm">Price</th>
             </tr>
           </thead>
             <tbody>
             <?php foreach ($MODEL as $product) {?>
               <tr>
+                <td><?=$product->getCode() ?></td>
                 <td><?=$product->getName() ?></td>
-                <td><?=$product->getQuantity() ?></td>
+                <td><?=$product->getCategory() ?></td>
+                <td><?=$product->getSupplier() ?></td>
                 <td><?=  number_format($product->getPrice()) ."VNĐ" ?></td>
-                <td><?= number_format($product->getQuantity() * $product->getPrice()) ."VNĐ" ?></td>
               </tr>
             <?php }?>
             </tbody>
             <tfoot>
               <tr>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td class="th-sm">TOTAL: </td>

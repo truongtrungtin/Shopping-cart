@@ -64,12 +64,13 @@ class CartController extends BaseController
                 $orderDate = (new DateTime())->format('Y-m-d'),
             );
             $order->Create();
-            
+            $invoicenumber = 3;
+            $quantity = 1;
             foreach ($cart->product as $product) {
                 $model = new OrderDetail(
                     $invoicenumber,
                     $product->getId(),
-                    $_REQUEST['name-'],
+                    $quantity,
                 );
                 $model->Create();
             }
