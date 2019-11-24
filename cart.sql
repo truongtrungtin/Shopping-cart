@@ -70,7 +70,7 @@ CREATE TABLE `carts` (
 ,`NAME` varchar(1024)
 ,`USERID` int(11)
 ,`INVOICENUMBER` int(50)
-,`SALEDATE` datetime
+,`ORDERDATE` datetime
 );
 
 -- --------------------------------------------------------
@@ -104,7 +104,7 @@ CREATE TABLE `order` (
   `USERID` int(11) NOT NULL,
   `PRODUCTID` int(11) NOT NULL,
   `INVOICENUMBER` int(50) NOT NULL,
-  `SALEDATE` datetime NOT NULL
+  `ORDERDATE` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -180,7 +180,7 @@ INSERT INTO `users` (`ID`, `NAME`, `LASTNAME`, `PHONE`, `EMAIL`, `USERNAME`, `PA
 --
 DROP TABLE IF EXISTS `carts`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `carts`  AS  select `s`.`ID` AS `ID`,`u`.`USERNAME` AS `USERNAME`,`a`.`CODE` AS `CODE`,`su`.`Supp_Name` AS `SUPPLIER`,`ca`.`Cate_Name` AS `CATEGORY`,`a`.`NAME` AS `NAME`,`u`.`ID` AS `USERID`,`s`.`INVOICENUMBER` AS `INVOICENUMBER`,`s`.`SALEDATE` AS `SALEDATE` from ((((`order` `s` join `users` `u` on(`s`.`USERID` = `u`.`ID`)) join `products` `a` on(`s`.`PRODUCTID` = `a`.`ID`)) join `supplier` `su` on(`a`.`BRAND` = `su`.`Supp_ID`)) join `category` `ca` on(`a`.`CATEGORYID` = `ca`.`Cate_ID`)) order by `s`.`INVOICENUMBER` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `carts`  AS  select `s`.`ID` AS `ID`,`u`.`USERNAME` AS `USERNAME`,`a`.`CODE` AS `CODE`,`su`.`Supp_Name` AS `SUPPLIER`,`ca`.`Cate_Name` AS `CATEGORY`,`a`.`NAME` AS `NAME`,`u`.`ID` AS `USERID`,`s`.`INVOICENUMBER` AS `INVOICENUMBER`,`s`.`ORDERDATE` AS `ORDERDATE` from ((((`order` `s` join `users` `u` on(`s`.`USERID` = `u`.`ID`)) join `products` `a` on(`s`.`PRODUCTID` = `a`.`ID`)) join `supplier` `su` on(`a`.`BRAND` = `su`.`Supp_ID`)) join `category` `ca` on(`a`.`CATEGORYID` = `ca`.`Cate_ID`)) order by `s`.`INVOICENUMBER` ;
 
 --
 -- Indexes for dumped tables

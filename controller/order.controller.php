@@ -6,9 +6,9 @@ class OrderController extends BaseController {
     public function Index () {
         $model = [];
         if ((Security::GetLoggedUser())->getRole() == 'ADMIN') {
-            $model = vwSale::GetAllOrder();
+            $model = Order::GetAllOrder();
         } else {
-            $model = vwSale::GetAllOrderForUser((Security::GetLoggedUser())->getId());
+            $model = Order::GetAllOrderForUser((Security::GetLoggedUser())->getId());
         }
         parent::RenderPage(
             'Order', 
@@ -17,6 +17,20 @@ class OrderController extends BaseController {
             $model
         );
     }
+
+    public function Details () {
+        $id = (int)$_REQUEST['id'];
+        $model = [];
+        $model = vwSale::GetOrderDetailById($id);
+        parent::RenderPage(
+            'Order', 
+            'view/layout/layout.php', 
+            'view/order/details.php',
+            $model
+        );
+    }
+
+
 
 }
 

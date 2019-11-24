@@ -7,6 +7,7 @@
       <div class="panel-body">
         <form action="?c=product&a=Buy" method="POST">
         <input type="hidden" name="id" id="id" value="<?= $MODEL->getId() ?>"/>
+        <input type="hidden" name="quantity" id="id" value="1"/>
           <table class="table table-striped table-hover dt-datatable">
             <thead>
               <tr>

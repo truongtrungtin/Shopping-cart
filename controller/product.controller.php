@@ -4,7 +4,7 @@ class ProductController extends BaseController {
     public function __CONSTRUCT (){}
     
     public function Index () {
-        $model = Article::GetAllProduct();
+        $model = Product::GetAllProduct();
         parent::RenderPage(
             'Product', 
             'view/layout/layout.php', 
@@ -15,7 +15,7 @@ class ProductController extends BaseController {
     // Product
     public function Edit () {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $model = new Article(
+            $model = new Product(
                 $_REQUEST['code'], 
                 $_REQUEST['supplierid'],
                 $_REQUEST['name'],
@@ -30,7 +30,7 @@ class ProductController extends BaseController {
             parent::RedirectToController('product');
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $id = (int)$_REQUEST['id'];
-            $model = Article::GetArticleById($id);
+            $model = Product::GetProductById($id);
             parent::RenderPage(
                 'Product',
                 'view/layout/layout.php', 
@@ -42,7 +42,7 @@ class ProductController extends BaseController {
 
     public function Create () {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $model = new Article(
+            $model = new Product(
                 $_REQUEST['code'], 
                 $_REQUEST['supplierid'],
                 $_REQUEST['name'],
@@ -66,12 +66,12 @@ class ProductController extends BaseController {
     public function Delete () {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = (int)$_REQUEST['id'];
-            $model = Article::GetArticleById($id);
+            $model = Product::GetProductById($id);
             $model->Delete();
             parent::RedirectToController('product');
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $id = (int)$_REQUEST['id'];
-            $model = Article::GetArticleById($id);
+            $model = Product::GetProductById($id);
             parent::RenderPage(
                 'Product',
                 'view/layout/layout.php', 
@@ -94,22 +94,20 @@ class ProductController extends BaseController {
     }
 
     public function Buy () {
+        $id = (int)$_REQUEST['id'];
+        $model = Product::GetProductById($id);
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = (int)$_REQUEST['id'];
-            $product = Article::GetArticleById($id);
             $cart = null;
             if (ShoppingCartSession::ShoppingCartExists()) {
                 $cart = ShoppingCartSession::GetShoppingCart();
-                array_push($cart->product, $product);
+                array_push($cart->product, $model);
             } else {
                 $cart = new ShoppingCart();
-                array_push($cart->product, $product);
+                array_push($cart->product, $model);
             }
             ShoppingCartSession::StoreShoppingCartInSession($cart);
-            parent::RedirectToController('product');
+            parent::RedirectToController('cart');
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $id = (int)$_REQUEST['id'];
-            $model = Article::GetArticleById($id);
             parent::RenderPage(
                 'Product',
                 'view/layout/layout.php', 

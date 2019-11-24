@@ -1,57 +1,84 @@
 <?php
-class Sale {
+class Order {
 
-  private $id;
-  public function getId () { return $this->id; }
-  private function setId ($id) { $this->id = $id; }
+  private $invoicenumber;
+  public function getInvoicenumber() { return $this->invoicenumber; }
+  private function setInvoicenumber ($invoicenumber) { $this->invoicenumber = $invoicenumber; }
 
   private $userID;
   public function getUserID () { return $this->userID; }
   private function setUserID ($userID) { $this->userID = $userID; }
 
-  private $productID;
-  public function getArticleID () { return $this->productID; }
-  private function setArticleID ($productID) { $this->productID = $productID; }
-
-  private $invoiceNumber;
-  public function getInvoiceNumber () { return $this->invoiceNumber; }
-  private function setInvoiceNumber ($invoiceNumber) { $this->invoiceNumber = $invoiceNumber; }
-
-  private $saleDate;
-  public function getSaleDate () { return $this->saleDate; }
-  private function setSaleDate ($saleDate) { $this->saleDate = $saleDate; }
+  private $orderDate;
+  public function getOrderDate () { return $this->orderDate; }
+  private function setOrderDate ($orderDate) { $this->orderDate = $orderDate; }
 
   public function __construct(
-    $userID,
-    $productID,
-    $invoiceNumber = '',
-    $saleDate = '',
-    $id = null
+    $userID = 0,
+    $orderDate = '',
+    $invoicenumber = null
   ) {
     $this->userID = $userID;
-    $this->productID = $productID;
-    $this->invoiceNumber = $invoiceNumber;
-    $this->saleDate = $saleDate;
-    $this->id = $id;
+    $this->orderDate = $orderDate;
+    $this->invoicenumber = $invoicenumber;
+  }
+
+  public static function GetMaxInvoicenumber () {
+    $model = null;
+    $db = (new DataBase())->CreateConnection();
+    $statement = $db->prepare('SELECT MAX(`INVOICENUMBER`) FROM `order`');
+    $statement->bind_result( $INVOICENUMBER);
+    if ($statement->execute()) {
+      while ($row = $statement->fetch()) {
+        $model = new Order($INVOICENUMBER);
+      }
+    }
+    return $model;
+  }
+
+  public static function GetAllOrder () {
+    $models = [];
+    $db = (new DataBase())->CreateConnection();
+    $statement = $db->prepare('SELECT `USERID` , `ORDERDATE` , `INVOICENUMBER` FROM `order`');
+    $statement->bind_result( $USERID , $ORDERDATE , $INVOICENUMBER);
+    if ($statement->execute()) {
+      while ($row = $statement->fetch()) {
+        $model = new Order(  $USERID , $ORDERDATE , $INVOICENUMBER);
+        array_push($models, $model);
+      }
+    }
+    return $models;
+  }
+
+  public static function GetAllOrderForUser ($Userid) {
+    $models = [];
+    $db = (new DataBase())->CreateConnection();
+    $statement = $db->prepare('SELECT DISTINCT  `USERID` , `ORDERDATE` , `INVOICENUMBER` FROM `order` WHERE `USERID` = ? ORDER BY `INVOICENUMBER` ');
+    $statement->bind_param('i',$Userid);
+    $statement->bind_result( $USERID , $ORDERDATE , $INVOICENUMBER);
+    if ($statement->execute()) {
+      while ($row = $statement->fetch()) {
+        $model = new Order( $USERID , $ORDERDATE , $INVOICENUMBER);
+        array_push($models, $model);
+      }
+    }
+    return $models;
   }
 
   public function Create () {
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('INSERT INTO `order`(`USERID`, `PRODUCTID`, `INVOICENUMBER`, `SALEDATE`) VALUES (?, ?, ?, ?)');
+    $sql= "INSERT INTO `order`( `USERID`, `ORDERDATE`) VALUES (?, ?);";
+    $statement = $db->prepare($sql);
     $statement->bind_param(
-      'iiss',
+      'is',
       $this->userID,
-      $this->productID,
-      $this->invoiceNumber,
-      $this->saleDate
+      $this->orderDate
     );
     $statement->execute();
-
-    Setting::IncrementLastInvoiceNumber();
-
-    $product = Article::GetArticleById($this->productID);
-    $product->setQuantity($product->getQuantity()-1);
-    $product->Edit();
+    // Setting::IncrementLastInvoiceNumber();
+    // $product = Product::GetProductById($this->productID);
+    // $product->setQuantity($product->getQuantity()-1);
+    // $product->Edit();
 
   }
 
@@ -62,7 +89,7 @@ class Sale {
         `USERID` = ?,
         `PRODUCTID` = ?,
         `INVOICENUMBER`= ?,
-        `SALEDATE` = ?
+        `ORDERDATE` = ?
       WHERE `ID` = ?
       '
     );
@@ -71,7 +98,7 @@ class Sale {
       $this->userID,
       $this->productID,
       $this->invoiceNumber,
-      $this->saleDate,
+      $this->orderDate,
       $this->id
     );
     $statement->execute();

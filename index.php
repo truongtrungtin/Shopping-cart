@@ -3,6 +3,7 @@ include_once('./security/security.class.php');
 include_once('./session/shoppingcart.session.php');
 include_once('./model/user.class.php');
 include_once('./model/product.class.php');
+include_once('./model/orderDetail.class.php');
 include_once('./model/order.class.php');
 include_once('./model/setting.class.php');
 include_once('./model/shoppingcart.class.php');
@@ -11,6 +12,8 @@ include_once('./model/vwproduct.class.php');
 include_once('./model/manage.class.php');
 include_once('./database/database.class.php');
 include_once('./controller/base.controller.php');
+
+
 
 class FrontController {
     

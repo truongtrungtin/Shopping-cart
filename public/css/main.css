@@ -671,7 +671,7 @@ iframe {
   border-bottom: 1px solid transparent;
 }
 
-li.sale-noti > a {
+li.order-noti > a {
   color: #e65540;
 }
 
@@ -1634,7 +1634,7 @@ li.sale-noti > a {
 /*[ Block2 ]
 ///////////////////////////////////////////////////////////
 */
-.block2-labelsale::before,
+.block2-labelorder::before,
 .block2-labelnew::before 
 {
   z-index: 100;
@@ -1656,9 +1656,9 @@ li.sale-noti > a {
   left: 12px;
 }
 
-.block2-labelsale::before {
+.block2-labelorder::before {
   background-color: #e65540;
-  content: 'Sale';
+  content: 'Order';
 }
 
 .block2-labelnew::before {

@@ -1,25 +1,31 @@
 <?php
-class CartController extends BaseController {
-    
-    public function __CONSTRUCT (){}
-    
-    public function Index () {
+class CartController extends BaseController
+{
+
+    public function __CONSTRUCT()
+    { }
+
+    public function Index()
+    {
+        
         $cart = ShoppingCartSession::GetShoppingCart();
         $model = $cart->product;
         parent::RenderPage(
-            'Cart', 
-            'view/layout/layout.php', 
+            'Cart',
+            'view/layout/layout.php',
             'view/cart/cart.php',
             $model
         );
     }
 
-    public function Empty () {
+    public function Empty()
+    {
         ShoppingCartSession::RemoveShoppingCartFromSession();
         parent::RedirectToController('cart');
     }
 
-    public function RemoveArticle () {
+    public function RemoveProduct()
+    {
         $id = $_REQUEST['id'];
         $cart = ShoppingCartSession::GetShoppingCart();
         $filteredProduct = array_filter($cart->product, function ($element) use ($id) {
@@ -34,38 +40,42 @@ class CartController extends BaseController {
             parent::RedirectToController('cart');
         }
     }
-    
-    public function Checkout () {
+
+    public function Checkout()
+    {
         $cart = ShoppingCartSession::GetShoppingCart();
         $model = $cart->product;
         parent::RenderPage(
-            'Cart', 
-            'view/layout/layout.php', 
+            'Cart',
+            'view/layout/layout.php',
             'view/cart/checkout.php',
             $model
         );
     }
 
-    public function ConfirmCheckout () {
+    public function ConfirmCheckout()
+    {
         if (ShoppingCartSession::ShoppingCartExists()) {
             $cart = ShoppingCartSession::GetShoppingCart();
             $cart->product;
+            $user = Security::GetLoggedUser();
+            $order = new Order(
+                $user->getId(),
+                $orderDate = (new DateTime())->format('Y-m-d'),
+            );
+            $order->Create();
+            
             foreach ($cart->product as $product) {
-                $user = Security::GetLoggedUser();
-                $sale = new Sale(
-                    $user->getId(),
+                $model = new OrderDetail(
+                    $invoicenumber,
                     $product->getId(),
-                    $invoiceNumber = (Setting::GetLastInvoiceNumber() + 1),
-                    $saleDate = (new DateTime())->format('Y-m-d H:i:s')
+                    $_REQUEST['name-'],
                 );
-                $sale->Create();
+                $model->Create();
             }
-            parent::RedirectToController('cart', 'Empty'); // Succesful, redirect to sale history
+            parent::RedirectToController('cart', 'Empty'); // Succesful, redirect to order history
         } else {
             parent::RedirectToController('product');
         }
     }
-
 }
-
-?>

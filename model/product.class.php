@@ -1,5 +1,5 @@
 <?php
-class Article {
+class Product {
 
   /* Mapped */
   
@@ -68,7 +68,7 @@ class Article {
     $this->cartUniqueId = uniqid('CART_');
   }
 
-  public static function GetArticleById ($id) {
+  public static function GetProductById ($id) {
     $model = null;
     $db = (new DataBase())->CreateConnection();
     $statement = $db->prepare('SELECT `CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE`, `CATEGORYID` , `DESCRIPTION` , `ID` FROM `product` WHERE `ID` = ?');
@@ -76,7 +76,7 @@ class Article {
     $statement->bind_result($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $DESCRIPTION , $ID);
     if ($statement->execute()) {
       while ($row = $statement->fetch()) {
-        $model = new Article($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $DESCRIPTION , $ID);
+        $model = new Product($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $DESCRIPTION , $ID);
       }
     }
     return $model;
@@ -89,7 +89,7 @@ class Article {
     $statement->bind_result($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $DESCRIPTION , $ID);
     if ($statement->execute()) {
       while ($row = $statement->fetch()) {
-        $model = new Article($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $DESCRIPTION , $ID);
+        $model = new Product($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $DESCRIPTION , $ID);
         array_push($models, $model);
       }
     }
