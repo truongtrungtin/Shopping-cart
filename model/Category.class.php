@@ -8,7 +8,7 @@ class Category
     {
         return $this->id;
     }
-    private function setId($id)
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -66,11 +66,10 @@ class Category
     public function Create()
     {
         $db = (new DataBase())->CreateConnection();
-        $statement = $db->prepare('INSERT INTO `category`(`Cate_ID` ,`Cate_Name` )  VALUES (?, ?)');
+        $statement = $db->prepare('INSERT INTO `category`(`Cate_Name` )  VALUES ( ?)');
         $statement->bind_param(
-            'is',
-            $this->id,
-            $this->category,
+            's',
+            $this->category
         );
         $statement->execute();
     }
@@ -81,7 +80,7 @@ class Category
         $statement = $db->prepare(
             'UPDATE `category` SET 
         `Cate_Name` = ?
-      WHERE `Supp_ID` = ?'
+      WHERE `Cate_ID` = ?'
         );
         $statement->bind_param(
             'si',

@@ -46,9 +46,9 @@ class SupplierController extends BaseController {
             $id = (int)$_REQUEST['id'];
             $model = Supplier::GetSupplierbyId($id);
             parent::RenderPage(
-                'Manage', 
+                'Supplier', 
                 'view/layout/layout.php', 
-                'view/manage/supplier.php',
+                'view/supplier/edit.php',
                 $model,
             );
         }

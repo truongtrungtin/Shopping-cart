@@ -24,7 +24,7 @@ class ProductController extends BaseController {
                 $_REQUEST['image'],
                 $_REQUEST['categoryid'],
                 $_REQUEST['description'],
-                $_REQUEST['id'],
+                $_REQUEST['id']
             );
             $model->Edit();
             parent::RedirectToController('product');
@@ -50,7 +50,7 @@ class ProductController extends BaseController {
                 $_REQUEST['quantity'],
                 $_REQUEST['image'],
                 $_REQUEST['categoryid'],
-                $_REQUEST['description'],
+                $_REQUEST['description']
             );
             $model->Create();
             parent::RedirectToController('product');

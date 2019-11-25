@@ -18,7 +18,7 @@ class Supplier
   {
     return $this->supplier;
   }
-  public function setSupplier($supplier)
+  private function setSupplier($supplier)
   {
     $this->supplier = $supplier;
   }
@@ -28,7 +28,7 @@ class Supplier
   {
     return $this->phone;
   }
-  public function setPhone($phone)
+  private function setPhone($phone)
   {
     $this->phone = $phone;
   }
@@ -38,7 +38,7 @@ class Supplier
   {
     return $this->address;
   }
-  public function setAddress($address)
+  private function setAddress($address)
   {
     $this->address = $address;
   }
@@ -105,7 +105,7 @@ class Supplier
       'UPDATE `supplier` SET 
         `Supp_Name` = ?,
         `Supp_Phone` = ?,
-        `Supp_Address` = ?,
+        `Supp_Address` = ?
       WHERE `Supp_ID` = ?'
     );
     $statement->bind_param(

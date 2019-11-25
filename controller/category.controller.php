@@ -34,6 +34,7 @@ class CategoryController extends BaseController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $model = new Category(
                 $_REQUEST['cate_name'], 
+                $_REQUEST['cate_id'],
             );
             $model->Edit();
             parent::RedirectToController('category');
@@ -43,7 +44,7 @@ class CategoryController extends BaseController {
             parent::RenderPage(
                 'Category',
                 'view/layout/layout.php', 
-                'view/category/create.php',
+                'view/category/edit.php',
                 $model
             );
         }
