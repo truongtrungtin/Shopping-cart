@@ -38,6 +38,8 @@ class CategoryController extends BaseController {
             $model->Edit();
             parent::RedirectToController('category');
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $id = (int)$_REQUEST['id'];
+            $model = Category::GetCatebyId($id);
             parent::RenderPage(
                 'Category',
                 'view/layout/layout.php', 

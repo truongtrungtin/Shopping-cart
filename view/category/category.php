@@ -22,7 +22,6 @@
                                 <td><?= $category->getId() ?></td>
                                 <td><?= $category->getCategory() ?></td>
                                 <td id="userButtons-cell">
-                                    <a class="fa fa-eye btn btn-info btn-sm" href="?c=category&a=Details&id=<?= $category->getId() ?>"></a>
                                     <a class="fa fa-pencil btn btn-warning btn-sm" href="?c=category&a=Edit&id=<?= $category->getId() ?>"></a>
                                     <a class="fa fa-trash btn btn-danger btn-sm" href="?c=category&a=Delete&id=<?= $category->getId() ?>"></a>
                                 </td>

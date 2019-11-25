@@ -43,6 +43,8 @@ class SupplierController extends BaseController {
             $model->Edit();
             parent::RedirectToController('supplier');
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $id = (int)$_REQUEST['id'];
+            $model = Supplier::GetSupplierbyId($id);
             parent::RenderPage(
                 'Manage', 
                 'view/layout/layout.php', 

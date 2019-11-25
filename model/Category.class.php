@@ -8,7 +8,7 @@ class Category
     {
         return $this->id;
     }
-    public function setId($id)
+    private function setId($id)
     {
         $this->id = $id;
     }
@@ -18,7 +18,7 @@ class Category
     {
         return $this->category;
     }
-    public function setCategoryr($category)
+    private function setCategoryr($category)
     {
         $this->category = $category;
     }
@@ -80,7 +80,7 @@ class Category
         $db = (new DataBase())->CreateConnection();
         $statement = $db->prepare(
             'UPDATE `category` SET 
-        `Cate_Name` = ?,
+        `Cate_Name` = ?
       WHERE `Supp_ID` = ?'
         );
         $statement->bind_param(
