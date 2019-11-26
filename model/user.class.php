@@ -146,7 +146,6 @@ class User {
       'INSERT INTO `users` (`NAME`, `LASTNAME`, `PHONE`, `EMAIL`, `USERNAME`, `PASSWORD`, `ROLE`) 
       VALUES (?, ?, ?, ?, ?, ?, ?)'
     );
-    $pwd = Security::HashPassword($this->password);
     $statement->bind_param(
       'sssssss',
 
@@ -155,7 +154,7 @@ class User {
       $this->phone,
       $this->email,
       $this->username,
-      $pwd,
+      $this->password,
       $this->role
     );
     $statement->execute();
