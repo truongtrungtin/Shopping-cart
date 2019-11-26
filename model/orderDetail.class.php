@@ -82,5 +82,9 @@ class OrderDetail
             $this->quantity
         );
         $statement->execute();
+        $product = Product::GetProductById($this->productid);
+        $product->setQuantity($product->getQuantity()-1);
+        $product->Edit();
+        
     }
 }

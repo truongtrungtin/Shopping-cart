@@ -25,7 +25,7 @@ class Product {
 
   private $quantity; 
   public function getQuantity () { return $this->quantity; }
-  private function setQuantity ($quantity) { $this->quantity = $quantity; }
+  public function setQuantity ($quantity) { $this->quantity = $quantity; }
 
   private $image;
   public function getImage () { return $this->image; }
@@ -128,7 +128,7 @@ class Product {
       WHERE `ID` = ?'
     );
     $statement->bind_param(
-      'sisdissii',
+      'sisdisssi',
       $this->code,
       $this->supplierid,
       $this->name,

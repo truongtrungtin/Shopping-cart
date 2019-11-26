@@ -61,10 +61,10 @@ class CartController extends BaseController
             $user = Security::GetLoggedUser();
             $order = new Order(
                 $user->getId(),
-                $orderDate = (new DateTime())->format('Y-m-d'),
+                $orderDate = (new DateTime())->format('Y-m-d H:i:s'),
             );
             $order->Create();
-            $invoicenumber = 1;
+            $invoicenumber = Setting::GetLastInvoiceNumber();
             $quantity = 1;
             foreach ($cart->product as $product) {
                 $model = new OrderDetail(

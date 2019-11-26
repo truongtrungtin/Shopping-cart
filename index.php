@@ -66,25 +66,18 @@ class FrontController {
      * @return void
      */
     private static function RenderFromQueryString () {
-        // Obtenemos el controlador que queremos cargar
         $controller = strtolower($_REQUEST['c']);
         $accion = isset($_REQUEST['a']) ? $_REQUEST['a'] : 'Index';
-        // Instanciamos el controlador
         require_once "controller/$controller.controller.php";
         $controller = ucwords($controller).'Controller';
         $controller = new $controller;
-        // Llama la accion
         call_user_func(array($controller, $accion));
     }
 
     public static function ProcessRequest () {
-        // If user is logged in, just render 
         if (Security::UserIsLoggedIn()) { FrontController::RenderController(); return; }
-        // If this is a login request, just render
         if (FrontController::IsLoginRequest()) { FrontController::RenderController(); return; }
-        // If this is a public request, just render
         if (FrontController::IsPublicRequest()) {  FrontController::RenderController(); return; }
-        // Otherwise, force render authentication controller (Login screen)
         header('Location: ?c='.FrontController::kAuthenticationController);
     }
 

@@ -30,7 +30,6 @@ class AuthenticationController extends BaseController {
     }
 
     public function Register () {
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user = new User(
                 $_REQUEST['username'], 
@@ -56,7 +55,6 @@ class AuthenticationController extends BaseController {
         Security::DeleteSession();
         parent::RedirectToController('Authentication');
     }
-    
 }
 
 ?>

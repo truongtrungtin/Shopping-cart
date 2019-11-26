@@ -3,7 +3,14 @@ class SupplierController extends BaseController {
     
     public function __CONSTRUCT (){}
     
+    private function RedirectToHomeIfNotAdmin () {
+        if ((Security::GetLoggedUser())->getRole() != 'ADMIN') {
+            parent::RedirectToController('home');
+        }
+    }
+
     public function Index () {
+        $this->RedirectToHomeIfNotAdmin();
         $model = Supplier::GetAllSupplier();
         parent::RenderPage(
             'Supplier', 
@@ -14,6 +21,7 @@ class SupplierController extends BaseController {
     }
 
     public function Create () {
+        $this->RedirectToHomeIfNotAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $model = new Supplier(
                 $_REQUEST['supp_name'], 
@@ -33,6 +41,7 @@ class SupplierController extends BaseController {
     }
 
     public function Edit () {
+        $this->RedirectToHomeIfNotAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $model = new Supplier(
                 $_REQUEST['supp_name'], 

@@ -75,10 +75,7 @@ class Order {
       $this->orderDate
     );
     $statement->execute();
-    // Setting::IncrementLastInvoiceNumber();
-    // $product = Product::GetProductById($this->productID);
-    // $product->setQuantity($product->getQuantity()-1);
-    // $product->Edit();
+    Setting::IncrementLastInvoiceNumber();
 
   }
 
