@@ -77,7 +77,7 @@ class vwSale {
   public static function GetOrderDetailById ($invoicenumber) {
     $models = [];
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('SELECT  `USERID` , `USERNAME`, `CODE`,  `NAME` , `ORDERDATE`, `QUANTITY` ,  `PRICE`, `IMAGE`, `SUPPLIER`, `CATEGORY` , `INVOICENUMBER` FROM `carts` WHERE `INVOICENUMBER` = ?');
+    $statement = $db->prepare('SELECT `u`.`ID` AS `USERID`, `u`.`USERNAME` AS `USERNAME`, `p`.`CODE` AS `CODE`, `p`.`NAME` AS `NAME`, `o`.`ORDERDATE` AS `ORDERDATE`, `od`.`QUANTITY` AS `QUANTITY`, `p`.`PRICE` AS `PRICE`,`p`.`IMAGE` AS `IMAGE`, `su`.`Supp_Name` AS `SUPPLIER` ,`ca`.`Cate_Name` AS `CATEGORY`, `o`.`INVOICENUMBER` AS `INVOICENUMBER` from (((((`cart`.`order` `o` join `cart`.`users` `u` on(`o`.`USERID` = `u`.`ID`)) join `cart`.`order_detail` `od` on(`o`.`INVOICENUMBER` = `od`.`INVOICENUMBER`)) join `cart`.`product` `p` on(`p`.`ID` = `od`.`PRODUCTID`)) join `cart`.`supplier` `su` on(`p`.`SUPPLIERID` = `su`.`Supp_ID`)) join `cart`.`category` `ca` on(`p`.`CATEGORYID` = `ca`.`Cate_ID`)) WHERE `o`.`INVOICENUMBER` = ?');
     $statement->bind_param('i', $invoicenumber);
     $statement->bind_result(  $USERID , $USERNAME, $CODE,  $NAME, $ORDERDATE, $QUANTITY , $PRICE , $IMAGE , $SUPPLIER, $CATEGORY , $INVOICENUMBER);
     if ($statement->execute()) {
@@ -94,7 +94,7 @@ class vwSale {
   public static function GetAllOrder () {
     $models = [];
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('SELECT  `USERID` , `USERNAME`, `CODE`,  `NAME` , `ORDERDATE`, `QUANTITY` ,  `PRICE`, `IMAGE`, `SUPPLIER`, `CATEGORY` , `INVOICENUMBER` FROM `carts` ORDER BY `INVOICENUMBER`');
+    $statement = $db->prepare(' SELECT `u`.`ID` AS `USERID`, `u`.`USERNAME` AS `USERNAME`, `p`.`CODE` AS `CODE`, `p`.`NAME` AS `NAME`, `o`.`ORDERDATE` AS `ORDERDATE`, `od`.`QUANTITY` AS `QUANTITY`, `p`.`PRICE` AS `PRICE`,`p`.`IMAGE` AS `IMAGE`, `su`.`Supp_Name` AS `SUPPLIER` ,`ca`.`Cate_Name` AS `CATEGORY`, `o`.`INVOICENUMBER` AS `INVOICENUMBER` from (((((`cart`.`order` `o` join `cart`.`users` `u` on(`o`.`USERID` = `u`.`ID`)) join `cart`.`order_detail` `od` on(`o`.`INVOICENUMBER` = `od`.`INVOICENUMBER`)) join `cart`.`product` `p` on(`p`.`ID` = `od`.`PRODUCTID`)) join `cart`.`supplier` `su` on(`p`.`SUPPLIERID` = `su`.`Supp_ID`)) join `cart`.`category` `ca` on(`p`.`CATEGORYID` = `ca`.`Cate_ID`)) order by `o`.`INVOICENUMBER`');
     $statement->bind_result( $USERID , $USERNAME, $CODE,  $NAME, $ORDERDATE, $QUANTITY , $PRICE , $IMAGE , $SUPPLIER, $CATEGORY , $INVOICENUMBER);
     if ($statement->execute()) {
       while ($row = $statement->fetch()) {
@@ -108,7 +108,7 @@ class vwSale {
   public static function GetAllOrderForUser ($Userid) {
     $models = [];
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('SELECT `USERID` , `USERNAME`, `CODE`,  `NAME` , `ORDERDATE`, `QUANTITY` ,  `PRICE`, `IMAGE`, `SUPPLIER`, `CATEGORY` , `INVOICENUMBER` FROM `carts` WHERE `USERID` = ?');
+    $statement = $db->prepare('SELECT `u`.`ID` AS `USERID`, `u`.`USERNAME` AS `USERNAME`, `p`.`CODE` AS `CODE`, `p`.`NAME` AS `NAME`, `o`.`ORDERDATE` AS `ORDERDATE`, `od`.`QUANTITY` AS `QUANTITY`, `p`.`PRICE` AS `PRICE`,`p`.`IMAGE` AS `IMAGE`, `su`.`Supp_Name` AS `SUPPLIER` ,`ca`.`Cate_Name` AS `CATEGORY`, `o`.`INVOICENUMBER` AS `INVOICENUMBER` from (((((`cart`.`order` `o` join `cart`.`users` `u` on(`o`.`USERID` = `u`.`ID`)) join `cart`.`order_detail` `od` on(`o`.`INVOICENUMBER` = `od`.`INVOICENUMBER`)) join `cart`.`product` `p` on(`p`.`ID` = `od`.`PRODUCTID`)) join `cart`.`supplier` `su` on(`p`.`SUPPLIERID` = `su`.`Supp_ID`)) join `cart`.`category` `ca` on(`p`.`CATEGORYID` = `ca`.`Cate_ID`)) WHERE `u`.`ID` = ?');
     $statement->bind_result(   $USERID , $USERNAME, $CODE,  $NAME, $ORDERDATE, $QUANTITY , $PRICE , $IMAGE , $SUPPLIER, $CATEGORY , $INVOICENUMBER);
     $statement->bind_param('i', $Userid);
     if ($statement->execute()) {
@@ -123,7 +123,7 @@ class vwSale {
   public static function GetSaleByInvoiceNumber ($invoiceNumber) {
     $model = null;
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('SELECT  `USERID` , `USERNAME`, `CODE`,  `NAME` , `ORDERDATE`, `QUANTITY` ,  `PRICE`, `IMAGE`, `SUPPLIER`, `CATEGORY` , `INVOICENUMBER`  FROM `carts` WHERE `INVOICENUMBER` = ?');
+    $statement = $db->prepare('SELECT `u`.`ID` AS `USERID`, `u`.`USERNAME` AS `USERNAME`, `p`.`CODE` AS `CODE`, `p`.`NAME` AS `NAME`, `o`.`ORDERDATE` AS `ORDERDATE`, `od`.`QUANTITY` AS `QUANTITY`, `p`.`PRICE` AS `PRICE`,`p`.`IMAGE` AS `IMAGE`, `su`.`Supp_Name` AS `SUPPLIER` ,`ca`.`Cate_Name` AS `CATEGORY`, `o`.`INVOICENUMBER` AS `INVOICENUMBER` from (((((`cart`.`order` `o` join `cart`.`users` `u` on(`o`.`USERID` = `u`.`ID`)) join `cart`.`order_detail` `od` on(`o`.`INVOICENUMBER` = `od`.`INVOICENUMBER`)) join `cart`.`product` `p` on(`p`.`ID` = `od`.`PRODUCTID`)) join `cart`.`supplier` `su` on(`p`.`SUPPLIERID` = `su`.`Supp_ID`)) join `cart`.`category` `ca` on(`p`.`CATEGORYID` = `ca`.`Cate_ID`)) WHERE `o`.`INVOICENUMBER` = ?');
     $statement->bind_param('i', $invoiceNumber);
     $statement->bind_result(  $USERID , $USERNAME, $CODE,  $NAME, $ORDERDATE, $QUANTITY , $PRICE , $IMAGE , $SUPPLIER, $CATEGORY , $INVOICENUMBER);
     if ($statement->execute()) {
@@ -137,8 +137,8 @@ class vwSale {
   public static function FindOrderByInvoiceNumber ($invoiceNumber) {
     $models = [];
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('SELECT `USERID` , `USERNAME`, `CODE`,  `NAME` , `ORDERDATE`, `QUANTITY` ,  `PRICE`, `IMAGE`, `SUPPLIER`, `CATEGORY` , `INVOICENUMBER` FROM `carts` WHERE `INVOICENUMBER` LIKE ?');
-    $statement->bind_param('s', $invoiceNumber);
+    $statement = $db->prepare('SELECT `u`.`ID` AS `USERID`, `u`.`USERNAME` AS `USERNAME`, `p`.`CODE` AS `CODE`, `p`.`NAME` AS `NAME`, `o`.`ORDERDATE` AS `ORDERDATE`, `od`.`QUANTITY` AS `QUANTITY`, `p`.`PRICE` AS `PRICE`,`p`.`IMAGE` AS `IMAGE`, `su`.`Supp_Name` AS `SUPPLIER` ,`ca`.`Cate_Name` AS `CATEGORY`, `o`.`INVOICENUMBER` AS `INVOICENUMBER` from (((((`cart`.`order` `o` join `cart`.`users` `u` on(`o`.`USERID` = `u`.`ID`)) join `cart`.`order_detail` `od` on(`o`.`INVOICENUMBER` = `od`.`INVOICENUMBER`)) join `cart`.`product` `p` on(`p`.`ID` = `od`.`PRODUCTID`)) join `cart`.`supplier` `su` on(`p`.`SUPPLIERID` = `su`.`Supp_ID`)) join `cart`.`category` `ca` on(`p`.`CATEGORYID` = `ca`.`Cate_ID`)) WHERE `o`.`INVOICENUMBER`  LIKE ?');
+    $statement->bind_param('i', $invoiceNumber);
     $statement->bind_result( $USERID , $USERNAME, $CODE,  $NAME, $ORDERDATE, $QUANTITY , $PRICE , $IMAGE , $SUPPLIER, $CATEGORY , $INVOICENUMBER);
     if ($statement->execute()) {
       while ($row = $statement->fetch()) {

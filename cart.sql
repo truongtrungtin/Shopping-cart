@@ -13,6 +13,8 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+07:00";
 
+CREATE DATABASE `cart`;
+USE `cart`;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -245,22 +247,6 @@ INSERT INTO `users` (`ID`, `NAME`, `LASTNAME`, `PHONE`, `EMAIL`, `USERNAME`, `PA
 (2, 'client', '', '09090909', 'client@gmail.com', 'client', '123456', 'CLIENT');
 
 -- --------------------------------------------------------
-
---
--- Structure for view `carts`
---
-DROP TABLE IF EXISTS `carts`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `carts`  AS  select `o`.`INVOICENUMBER` AS `INVOICENUMBER`,`o`.`ORDERDATE` AS `ORDERDATE`,`u`.`USERNAME` AS `USERNAME`,`u`.`ID` AS `USERID`,`p`.`CODE` AS `CODE`,`p`.`NAME` AS `NAME`,`p`.`PRICE` AS `PRICE`,`od`.`QUANTITY` AS `QUANTITY`,`p`.`IMAGE` AS `IMAGE`,`su`.`Supp_Name` AS `SUPPLIER`,`ca`.`Cate_Name` AS `CATEGORY` from (((((`order` `o` join `users` `u` on(`o`.`USERID` = `u`.`ID`)) join `order_detail` `od` on(`o`.`INVOICENUMBER` = `od`.`INVOICENUMBER`)) join `product` `p` on(`p`.`ID` = `od`.`PRODUCTID`)) join `supplier` `su` on(`p`.`SUPPLIERID` = `su`.`Supp_ID`)) join `category` `ca` on(`p`.`CATEGORYID` = `ca`.`Cate_ID`)) order by `o`.`INVOICENUMBER` ;
-
--- --------------------------------------------------------
-
---
--- Structure for view `products`
---
-DROP TABLE IF EXISTS `products`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `products`  AS  select `p`.`ID` AS `ID`,`p`.`CATEGORYID` AS `CATEGORYID`,`p`.`DESCRIPTION` AS `DESCRIPTION`,`p`.`IMAGE` AS `IMAGE`,`p`.`NAME` AS `NAME`,`p`.`CODE` AS `CODE`,`p`.`QUANTITY` AS `QUANTITY`,`p`.`PRICE` AS `PRICE`,`p`.`SUPPLIERID` AS `SUPPLIERID`,`su`.`Supp_Name` AS `SUPPLIER`,`ca`.`Cate_Name` AS `CATEGORY` from ((`product` `p` join `supplier` `su` on(`p`.`SUPPLIERID` = `su`.`Supp_ID`)) join `category` `ca` on(`p`.`CATEGORYID` = `ca`.`Cate_ID`)) ;
 
 --
 -- Indexes for dumped tables
