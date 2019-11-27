@@ -1,8 +1,3 @@
-<section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url(./public/images/product-detail-01.jpg);">
-  <h2 class="l-text2 t-center">
-    TRUNG TIN
-  </h2>
-</section>
 <!-- Content page -->
 <section class="bgwhite p-t-55 p-b-65">
   <div class="container">
@@ -15,10 +10,23 @@
           </h4>
           <ul class="p-b-54">
             <li class="p-t-4">
-              <a href="#" class="s-text13 active1">
+              <a href="?c=product" class="s-text13 active1">
                 All
               </a>
             </li>
+            <?php $a = Category::GetAllCategory() ?>
+
+            <?php foreach ($a as $category) { ?>
+              <form action="?c=product" method="post">
+                <li class="p-t-4">
+                  <input type="hidden" name="category" value="<?= $category->getId() ?>">
+                  <button type=submit>
+                    <?= $category->getCategory() ?>
+                  </button>
+                </li>
+              </form>
+            <?php } ?>
+
           </ul>
         </div>
       </div>
@@ -32,6 +40,13 @@
               </div>
             </div>
           <?php } ?>
+          <div>
+            <form action="?c=product" method="post">
+              <input type="text" name="name">
+              <button type="submit" class="btn btn-success">Find</button>
+            </form>
+
+          </div>
         </div>
         <!-- Product -->
         <div class="row">

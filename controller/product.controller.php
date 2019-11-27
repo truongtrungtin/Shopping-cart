@@ -4,7 +4,18 @@ class ProductController extends BaseController {
     public function __CONSTRUCT (){}
     
     public function Index () {
-        $model = Product::GetAllProduct();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+            if (!empty($_REQUEST['name'])) {
+                $model =  vwProduct::FindOrderByInvoiceNumber('%' .$_REQUEST['name'] .'%');
+            }
+            else if(!empty($_REQUEST['category'])){
+                $id = (int)$_REQUEST['category'];
+                $model = Product::GetProductByCateogry($id);
+            }
+        }
+        else{
+            $model = Product::GetAllProduct();
+        }
         parent::RenderPage(
             'Product', 
             'view/layout/layout.php', 
@@ -108,7 +119,7 @@ class ProductController extends BaseController {
                 array_push($cart->product, $model);
             }
             ShoppingCartSession::StoreShoppingCartInSession($cart);
-            parent::RedirectToController('cart');
+            parent::RedirectToController('product');
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             parent::RenderPage(
                 'Product',
@@ -118,7 +129,6 @@ class ProductController extends BaseController {
             );
         }
     }
-
 
 }
 

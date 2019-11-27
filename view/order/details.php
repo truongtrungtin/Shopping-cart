@@ -4,7 +4,7 @@
     <a href="?c=order" class="btn btn-success">Back</a>
 
       <header class="panel-heading">
-        <h2>Order : <?php echo $_REQUEST['id']?></h2>
+        <h2>Invoice: <?php echo $_REQUEST['id']?></h2>
       </header>
       <div class="panel-body">
         <table class="table table-striped table-bordered table-sm" >

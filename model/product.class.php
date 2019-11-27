@@ -82,10 +82,25 @@ class Product {
     return $model;
   }
 
+  public static function GetProductByCateogry ($categoryid) {
+    $models = [];
+    $db = (new DataBase())->CreateConnection();
+    $statement = $db->prepare('SELECT `CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE`, `CATEGORYID` , `DESCRIPTION` , `ID` FROM `product` WHERE `CATEGORYID` = ?');
+    $statement->bind_param('i', $categoryid);
+    $statement->bind_result($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $DESCRIPTION , $ID);
+    if ($statement->execute()) {
+      while ($row = $statement->fetch()) {
+        $model = new Product($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $DESCRIPTION , $ID);
+        array_push($models, $model);
+      }
+    }
+    return $models;
+  }
+
   public static function GetAllProduct () {
     $models = [];
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('SELECT `CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE` , `CATEGORYID` , `DESCRIPTION` , `ID` FROM `product` LIMIT 9 ');
+    $statement = $db->prepare('SELECT `CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, `IMAGE` , `CATEGORYID` , `DESCRIPTION` , `ID` FROM `product`');
     $statement->bind_result($CODE, $SUPPLIERID, $NAME, $PRICE, $QUANTITY, $IMAGE, $CATEGORYID , $DESCRIPTION , $ID);
     if ($statement->execute()) {
       while ($row = $statement->fetch()) {

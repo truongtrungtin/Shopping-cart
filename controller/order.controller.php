@@ -20,7 +20,6 @@ class OrderController extends BaseController {
 
     public function Details () {
         $id = (int)$_REQUEST['id'];
-        $model = [];
         $model = vwSale::GetOrderDetailById($id);
         parent::RenderPage(
             'Order', 

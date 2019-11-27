@@ -157,7 +157,7 @@ class vwProduct
     `p`.`SUPPLIERID` AS `SUPPLIERID`,
     `p`.`CATEGORYID` AS `CATEGORYID`,
     `p`.`ID` AS `ID`
-FROM
+    FROM
     ((`product` `p`
     JOIN `supplier` `su` ON (`p`.`SUPPLIERID` = `su`.`Supp_ID`))
     JOIN `category` `ca` ON (`p`.`CATEGORYID` = `ca`.`Cate_ID`)) WHERE `p`.`ID` = ?');
@@ -171,7 +171,8 @@ FROM
     return $model;
   }
 
-  public static function GetAllProduct () {
+  public static function GetAllProduct()
+  {
     $models = [];
     $db = (new DataBase())->CreateConnection();
     $statement = $db->prepare('SELECT
@@ -186,14 +187,45 @@ FROM
     `p`.`SUPPLIERID` AS `SUPPLIERID`,
     `p`.`CATEGORYID` AS `CATEGORYID`,
     `p`.`ID` AS `ID`
-FROM
+    FROM
     ((`product` `p`
     JOIN `supplier` `su` ON (`p`.`SUPPLIERID` = `su`.`Supp_ID`))
     JOIN `category` `ca` ON (`p`.`CATEGORYID` = `ca`.`Cate_ID`)) ');
+    $statement->bind_result($CODE, $SUPPLIER, $CATEGORY, $NAME, $DESCRIPTION, $IMAGE, $QUANTITY, $PRICE, $SUPPLIERID, $CATEGORYID, $ID);
+    if ($statement->execute()) {
+      while ($row = $statement->fetch()) {
+        $model = new vwProduct($CODE, $SUPPLIER, $CATEGORY, $NAME, $DESCRIPTION, $IMAGE, $QUANTITY, $PRICE, $SUPPLIERID, $CATEGORYID, $ID);
+        array_push($models, $model);
+      }
+    }
+    return $models;
+  }
+
+  public static function FindOrderByInvoiceNumber ($name) {
+    $models = [];
+    $db = (new DataBase())->CreateConnection();
+    $statement = $db->prepare('SELECT
+    `p`.`CODE` AS `CODE`,
+    `su`.`Supp_Name` AS `SUPPLIER`,
+    `ca`.`Cate_Name` AS `CATEGORY`,
+    `p`.`NAME` AS `NAME`,
+    `p`.`DESCRIPTION` AS `DESCRIPTION`,
+    `p`.`IMAGE` AS `IMAGE`,
+    `p`.`QUANTITY` AS `QUANTITY`,
+    `p`.`PRICE` AS `PRICE`,
+    `p`.`SUPPLIERID` AS `SUPPLIERID`,
+    `p`.`CATEGORYID` AS `CATEGORYID`,
+    `p`.`ID` AS `ID`
+    FROM
+    ((`product` `p`
+    JOIN `supplier` `su` ON (`p`.`SUPPLIERID` = `su`.`Supp_ID`))
+    JOIN `category` `ca` ON (`p`.`CATEGORYID` = `ca`.`Cate_ID`)) 
+    WHERE `p`.`NAME`  LIKE ?');
+    $statement->bind_param('s', $name);
     $statement->bind_result( $CODE, $SUPPLIER, $CATEGORY, $NAME, $DESCRIPTION, $IMAGE, $QUANTITY, $PRICE, $SUPPLIERID, $CATEGORYID, $ID);
     if ($statement->execute()) {
       while ($row = $statement->fetch()) {
-        $model = new vwProduct( $CODE, $SUPPLIER, $CATEGORY, $NAME, $DESCRIPTION, $IMAGE, $QUANTITY, $PRICE, $SUPPLIERID, $CATEGORYID, $ID);
+        $model = new vwProduct($CODE, $SUPPLIER, $CATEGORY, $NAME, $DESCRIPTION, $IMAGE, $QUANTITY, $PRICE, $SUPPLIERID, $CATEGORYID, $ID);
         array_push($models, $model);
       }
     }
