@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2019 at 07:33 AM
+-- Generation Time: Dec 02, 2019 at 07:41 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -21,7 +21,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `cart`
 --
-CREATE DATABASE IF NOT EXISTS `cart` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE DATABASE IF NOT EXISTS `cart` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE `cart`;
 
 -- --------------------------------------------------------
@@ -32,8 +32,8 @@ USE `cart`;
 
 CREATE TABLE `category` (
   `Cate_ID` int(11) NOT NULL,
-  `Cate_Name` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Cate_Name` varchar(256) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `category`
@@ -55,8 +55,8 @@ INSERT INTO `category` (`Cate_ID`, `Cate_Name`) VALUES
 
 CREATE TABLE `consumers` (
   `ID` int(11) NOT NULL,
-  `Consumer_name` varchar(100) CHARACTER SET utf8 NOT NULL,
-  `Consumer_address` varchar(100) CHARACTER SET utf8 NOT NULL
+  `Consumer_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `Consumer_address` varchar(100) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -77,7 +77,7 @@ CREATE TABLE `order` (
   `USERID` int(11) NOT NULL,
   `ORDERDATE` datetime NOT NULL,
   `CONSUMERID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -90,7 +90,7 @@ CREATE TABLE `order_detail` (
   `INVOICENUMBER` int(11) NOT NULL,
   `PRODUCTID` int(11) NOT NULL,
   `QUANTITY` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -100,15 +100,15 @@ CREATE TABLE `order_detail` (
 
 CREATE TABLE `product` (
   `ID` int(11) NOT NULL,
-  `CODE` varchar(50) NOT NULL,
+  `CODE` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `SUPPLIERID` int(11) NOT NULL,
-  `NAME` varchar(1024) NOT NULL,
+  `NAME` varchar(1024) COLLATE utf8_unicode_ci NOT NULL,
   `PRICE` decimal(18,0) NOT NULL,
   `QUANTITY` int(11) NOT NULL DEFAULT 0,
-  `IMAGE` varchar(256) NOT NULL DEFAULT 'default.jpg',
+  `IMAGE` varchar(256) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'default.jpg',
   `CATEGORYID` int(11) NOT NULL,
-  `DESCRIPTION` varchar(5000) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `DESCRIPTION` varchar(5000) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `product`
@@ -134,9 +134,9 @@ INSERT INTO `product` (`ID`, `CODE`, `SUPPLIERID`, `NAME`, `PRICE`, `QUANTITY`, 
 
 CREATE TABLE `settings` (
   `ID` int(11) NOT NULL,
-  `SKEY` varchar(50) NOT NULL,
-  `SVALUE` mediumtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `SKEY` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `SVALUE` mediumtext COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `settings`
@@ -154,10 +154,10 @@ INSERT INTO `settings` (`ID`, `SKEY`, `SVALUE`) VALUES
 
 CREATE TABLE `supplier` (
   `Supp_ID` int(11) NOT NULL,
-  `Supp_Name` varchar(256) NOT NULL,
-  `Supp_Phone` varchar(256) NOT NULL,
-  `Supp_Address` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Supp_Name` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
+  `Supp_Phone` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
+  `Supp_Address` varchar(256) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `supplier`
@@ -177,14 +177,14 @@ INSERT INTO `supplier` (`Supp_ID`, `Supp_Name`, `Supp_Phone`, `Supp_Address`) VA
 
 CREATE TABLE `users` (
   `ID` int(11) NOT NULL,
-  `NAME` varchar(50) NOT NULL,
-  `LASTNAME` varchar(50) NOT NULL,
-  `PHONE` varchar(50) NOT NULL,
-  `EMAIL` varchar(255) NOT NULL,
-  `USERNAME` varchar(50) NOT NULL,
-  `PASSWORD` varchar(255) NOT NULL,
-  `ROLE` varchar(50) DEFAULT 'CLIENT'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `NAME` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `LASTNAME` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `PHONE` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `EMAIL` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `USERNAME` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `PASSWORD` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `ROLE` varchar(50) COLLATE utf8_unicode_ci DEFAULT 'CLIENT'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `users`
