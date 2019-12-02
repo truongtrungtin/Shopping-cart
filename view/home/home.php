@@ -1,4 +1,8 @@
 <!-- Slide1 -->
+<?php if((Security::GetLoggedUser())->getRole() == 'STAFF') {
+    header('Location: ?c=cart');
+    exit;
+  } else { ?>
 <section class="slide1">
   <div class="wrap-slick1">
     <div class="slick1">
@@ -74,3 +78,4 @@
     </div>
   </div>
 </section>
+<?php } ?>

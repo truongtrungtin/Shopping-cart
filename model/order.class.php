@@ -13,37 +13,30 @@ class Order {
   public function getOrderDate () { return $this->orderDate; }
   private function setOrderDate ($orderDate) { $this->orderDate = $orderDate; }
 
+  private $consumerid;
+  public function getConsumerid () { return $this->consumerid; }
+  private function setConsumerid ($consumerid) { $this->consumerid = $consumerid; }
+
   public function __construct(
     $userID = 0,
     $orderDate = '',
+    $consumerid = 0,
     $invoicenumber = null
   ) {
     $this->userID = $userID;
     $this->orderDate = $orderDate;
+    $this->consumerid = $consumerid;
     $this->invoicenumber = $invoicenumber;
-  }
-
-  public static function GetMaxInvoicenumber () {
-    $model = null;
-    $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('SELECT MAX(`INVOICENUMBER`) FROM `order`');
-    $statement->bind_result( $INVOICENUMBER);
-    if ($statement->execute()) {
-      while ($row = $statement->fetch()) {
-        $model = new Order($INVOICENUMBER);
-      }
-    }
-    return $model;
   }
 
   public static function GetAllOrder () {
     $models = [];
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('SELECT `USERID` , `ORDERDATE` , `INVOICENUMBER` FROM `order`');
-    $statement->bind_result( $USERID , $ORDERDATE , $INVOICENUMBER);
+    $statement = $db->prepare('SELECT `USERID` , `ORDERDATE` , `CONSUMERID` , `INVOICENUMBER` FROM `order`');
+    $statement->bind_result( $USERID , $ORDERDATE , $CONSUMERID , $INVOICENUMBER);
     if ($statement->execute()) {
       while ($row = $statement->fetch()) {
-        $model = new Order(  $USERID , $ORDERDATE , $INVOICENUMBER);
+        $model = new Order(  $USERID , $ORDERDATE , $CONSUMERID , $INVOICENUMBER);
         array_push($models, $model);
       }
     }
@@ -53,12 +46,12 @@ class Order {
   public static function GetAllOrderForUser ($Userid) {
     $models = [];
     $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('SELECT DISTINCT  `USERID` , `ORDERDATE` , `INVOICENUMBER` FROM `order` WHERE `USERID` = ? ORDER BY `INVOICENUMBER` ');
+    $statement = $db->prepare('SELECT DISTINCT  `USERID` , `ORDERDATE` , `CONSUMERID` , `INVOICENUMBER` FROM `order` WHERE `USERID` = ? ORDER BY `INVOICENUMBER` ');
     $statement->bind_param('i',$Userid);
-    $statement->bind_result( $USERID , $ORDERDATE , $INVOICENUMBER);
+    $statement->bind_result( $USERID , $ORDERDATE , $CONSUMERID , $INVOICENUMBER);
     if ($statement->execute()) {
       while ($row = $statement->fetch()) {
-        $model = new Order( $USERID , $ORDERDATE , $INVOICENUMBER);
+        $model = new Order( $USERID , $ORDERDATE , $CONSUMERID , $INVOICENUMBER);
         array_push($models, $model);
       }
     }
@@ -67,46 +60,17 @@ class Order {
 
   public function Create () {
     $db = (new DataBase())->CreateConnection();
-    $sql= "INSERT INTO `order`( `USERID`, `ORDERDATE`) VALUES (?, ?);";
+    $sql= "INSERT INTO `order`( `USERID`, `ORDERDATE` , `CONSUMERID`) VALUES (?, ?, ?);";
     $statement = $db->prepare($sql);
     $statement->bind_param(
-      'is',
+      'isi',
       $this->userID,
-      $this->orderDate
+      $this->orderDate,
+      $this->consumerid
     );
     $statement->execute();
     Setting::IncrementLastInvoiceNumber();
 
   }
-
-  public function Edit () {
-    $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare(
-      'UPDATE `order` SET 
-        `USERID` = ?,
-        `PRODUCTID` = ?,
-        `INVOICENUMBER`= ?,
-        `ORDERDATE` = ?
-      WHERE `ID` = ?
-      '
-    );
-    $statement->bind_param(
-      'iissi',
-      $this->userID,
-      $this->productID,
-      $this->invoiceNumber,
-      $this->orderDate,
-      $this->id
-    );
-    $statement->execute();
-  }
-
-  public function Delete () {
-    $db = (new DataBase())->CreateConnection();
-    $statement = $db->prepare('DELETE FROM `order` WHERE `ID` = ?');
-    $statement->bind_param('i', $this->id);
-    $statement->execute();
-  }
-
 }
 ?>

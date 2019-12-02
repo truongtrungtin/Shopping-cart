@@ -11,14 +11,17 @@ include_once('./model/vwsale.class.php');
 include_once('./model/vwproduct.class.php');
 include_once('./model/supplier.class.php');
 include_once('./model/category.class.php');
+include_once('./model/consumer.class.php');
 include_once('./database/database.class.php');
 include_once('./controller/base.controller.php');
 
 
 
 class FrontController {
-    
+
+   
     const kDefaultController = 'home';
+
     const kAuthenticationController = 'authentication';
     const kPublicControllers = [];
 

@@ -7,16 +7,19 @@
     <nav class="menu">
       <ul class="main_menu">
         <?php if (Security::UserIsLoggedIn()) { ?>
-          <li>
-            <a href="?c=home" class="<?= (($PAGE == 'Home') ? 'active' : '') ?>">
-              <i class="fa fa-dashboard" aria-hidden="true"></i> &nbsp;Home
-            </a>
-          </li>
-          <li>
-            <a href="?c=product" class="<?= (($PAGE == 'Product') ? 'active' : '') ?>">
-              <i class="fa fa-product-hunt" aria-hidden="true"></i>&nbsp;Shop
-            </a>
-          </li>
+          <?php if ((Security::GetLoggedUser())->getRole() != 'STAFF') { ?>
+            <li>
+              <a href="?c=home" class="<?= (($PAGE == 'Home') ? 'active' : '') ?>">
+                <i class="fa fa-dashboard" aria-hidden="true"></i> &nbsp;Home
+              </a>
+            </li>
+
+            <li>
+              <a href="?c=product" class="<?= (($PAGE == 'Product') ? 'active' : '') ?>">
+                <i class="fa fa-product-hunt" aria-hidden="true"></i>&nbsp;Shop
+              </a>
+            </li>
+          <?php } ?>
           <?php if ((Security::GetLoggedUser())->getRole() == 'ADMIN') { ?>
             <li>
               <a href="?c=order" class="<?= (($PAGE == 'Order') ? 'active' : '') ?>">
@@ -34,13 +37,21 @@
               </a>
             </li>
           <?php } ?>
-          <?php if ((Security::GetLoggedUser())->getRole() == 'CLIENT') { ?>
+          <?php if ((Security::GetLoggedUser())->getRole() == 'STAFF') { ?>
+            <li>
+              <a href="?c=cart" class="<?= (($PAGE == 'Cart') ? 'active' : '') ?>">
+                <i class="fa fa-product-hunt" aria-hidden="true"></i>&nbsp;Cart
+              </a>
+            </li>
+          <?php } ?>
+          <?php if ((Security::GetLoggedUser())->getRole() == 'CLIENT' || (Security::GetLoggedUser())->getRole() == 'STAFF') { ?>
             <li>
               <a href="?c=order" class="<?= (($PAGE == 'Order') ? 'active' : '') ?>">
                 <i class="fa fa-history" aria-hidden="true"></i>&nbsp;History
               </a>
             </li>
           <?php } ?>
+
         <?php } ?>
       </ul>
     </nav>

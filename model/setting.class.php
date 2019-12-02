@@ -66,5 +66,14 @@ class Setting {
     $model->Edit();
   }
 
+  public static function IncrementLastConsumer () {
+    $model = Setting::GetSettingByKey('LASTCONSUMER');
+    $model->setSValue(($model->getSValue()+1));
+    $model->Edit();
+  }
+  public static function GetLastConsumer() {
+    return (int)(Setting::GetSettingByKey('LASTCONSUMER'))->getSValue();
+  }
+
 }
 ?>

@@ -9,7 +9,7 @@
   <form class="text-center" action="?c=users&a=Edit" method="POST" autocomplete="off">
     <div class="form-row mb-4">
       <div class="col-6">
-        <input value="<?= $MODEL->getUsername() ?>" type="text" class="form-control" id="username" name="username" placeholder="User" <?= (Security::GetLoggedUser())->getRole() == 'CLIENT' ? 'disabled="disabled"' : '' ?>>
+        <input value="<?= $MODEL->getUsername() ?>" type="text" class="form-control" id="username" name="username" placeholder="User" <?= ((Security::GetLoggedUser())->getRole() == 'CLIENT' || (Security::GetLoggedUser())->getRole() == 'STAFF') ? 'disabled="disabled"' : '' ?>>
       </div>
       <div class="col-6">
         <input value="<?= $MODEL->getPassword() ?>" type="password" class="form-control" id="password" name="password" placeholder="Password">
@@ -31,9 +31,10 @@
         <input value="<?= $MODEL->getEmail() ?>" type="email" class="form-control" id="email" name="email" placeholder="micorreo@midominio.com">
       </div>
       <div class="col ">
-        <select name="role" id="role" class="form-control" <?= (Security::GetLoggedUser())->getRole() == 'CLIENT' ? 'disabled="disabled"' : '' ?>>
+        <select name="role" id="role" class="form-control" <?= ((Security::GetLoggedUser())->getRole() == 'CLIENT' || (Security::GetLoggedUser())->getRole() == 'STAFF') ? 'disabled="disabled"' : '' ?>>
           <option value="CLIENT" <?= $MODEL->getRole() === 'CLIENT' ? 'selected="selected"' : '' ?>>Client</option>
           <option value="ADMIN" <?= $MODEL->getRole() === 'ADMIN' ? 'selected="selected"' : '' ?>>Administration</option>
+          <option value="ADMIN" <?= $MODEL->getRole() === 'STAFF' ? 'selected="selected"' : '' ?>>staff</option>
         </select>
       </div>
     </div>
